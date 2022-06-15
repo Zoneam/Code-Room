@@ -10,7 +10,7 @@ import SignUpForm from '../../components/SignUpForm/SignUpForm';
 import Post from '../../components/Post/Post'
 import MyPostsPage from '../MyPostsPage/MyPostsPage'
 import AllPostsPage from '../AllPostsPage/AllPostsPage'
-
+import FullPostPage from '../FullPostPage/FullPostPage'
 function App() {
   const [user, setUser] = useState(getUser());
   
@@ -24,8 +24,8 @@ function App() {
         <Route path="/login" element={<LoginForm/>}/>
         <Route path="/signup" element={<SignUpForm/>}/>
         <Route path="/myposts" element={<MyPostsPage/>}/>
-        <Route path="/allposts" element={<AllPostsPage/>}/>
-        <Route path="/favorites" element={<CreatePostPage/>}/>
+        <Route path="/allposts" element={<AllPostsPage user={user}/>}/>
+        <Route path="/allposts/post/:id" element={<FullPostPage/>}/>
         <Route path="/create" element={<CreatePostPage/>}/>
       </Routes>
 

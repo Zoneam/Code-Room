@@ -23,3 +23,7 @@ export function getAllPosts() {
 export function addLike(postId) {
   return sendRequest(`${BASE_URL}/like/${postId}`, 'PUT');
 }
+
+export function getPost(id) {
+  return sendRequest(`${BASE_URL}/allposts/post/${id}`);
+}

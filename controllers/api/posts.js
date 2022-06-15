@@ -6,6 +6,7 @@ module.exports = {
   getMyPosts,
   createNewPost,
   addLike,
+  getFullPost,
 };
 
 // Get All Public Posts
@@ -32,7 +33,8 @@ async function createNewPost(req, res) {
 
 // Get all my posts
 async function getMyPosts(req, res) {
-  const posts = await Post.find({ user: req.user._id });
+  const posts = await Post.find({ author: req.user._id });
+  console.log(posts)
   res.json(posts);
 }
 
@@ -56,3 +58,10 @@ async function addLike(req, res) {
   });
 })
 }
+
+
+async function getFullPost(req, res) {
+  const post = await Post.find({ _id: req.params.id });
+  res.json(post);
+}
+

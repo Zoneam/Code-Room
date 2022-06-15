@@ -33,7 +33,7 @@ export default function CreatePostPage() {
   return (
     <>
       <div style={{ width: "70%", margin: "50px auto" }}>
-        <Form className="NewSkillForm" onSubmit={(e) => handleSave(e)}>
+        <Form onSubmit={(e) => handleSave(e)}>
           <InputGroup size="lg" className="mb-3">
             <Form.Control
               aria-label="Large"

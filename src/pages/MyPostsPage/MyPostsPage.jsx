@@ -4,18 +4,13 @@ import Post from '../../components/Post/Post'
 
 export default function MyPostsPage() {
     const [myPosts, setMyPosts] = useState([]);
-
-
-    
     useEffect(function() {
         async function getPosts() {
           const posts = await postsAPI.getMyPosts();
-          
           setMyPosts(posts.reverse());
         }
         getPosts();
       },[]);
-
 
       const posts = myPosts.map((myPost,i) => {
          return( 
