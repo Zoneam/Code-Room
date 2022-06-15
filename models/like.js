@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const likeSchema = new Schema({
-  recipe:  {
+  post:  {
     type: String,
     },
   likes: {

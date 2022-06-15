@@ -21,11 +21,14 @@ const postSchema = new Schema({
     type: String,
     required: false,
   },
+  public: {
+    type: Boolean,
+    default: false,
+    required: true,
+  },
   author: {type: Schema.Types.ObjectId, ref: 'User',},
   comments: { type: Schema.Types.ObjectId, ref: 'Comment'},
-  likes: {
-    type: Schema.Types.ObjectId, ref: 'Like'
-  },
+  likes: { type: Schema.Types.ObjectId, ref: 'Like' },
   category: {
     type: String,
     enum: ['Coding', 'DataScience', 'UIUX', 'None'],

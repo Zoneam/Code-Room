@@ -5,7 +5,9 @@ const ensureLoggedIn = require('../../config/ensureLoggedIn');
 
 
 // GET /api/users/check-token
-router.get('/allposts', ensureLoggedIn, postsCtrl.getAllPublicPosts);
-router.post('/create',  postsCtrl.createNewPost);
+router.post('/create',ensureLoggedIn,  postsCtrl.createNewPost);
+router.put('/like/:postId',ensureLoggedIn,  postsCtrl.addLike);
+router.get('/myposts',ensureLoggedIn,  postsCtrl.getMyPosts);
+router.get('/allposts', ensureLoggedIn, postsCtrl.getAllPosts);
 
 module.exports = router;

@@ -20,10 +20,10 @@ function Navibar({ user, setUser }) {
             {user ? (
               <>
                 <Nav className="me-auto">
-                  <Nav.Link href="">All Snippets</Nav.Link>
-                  <Nav.Link href="">My Snippets</Nav.Link>
-                  <Nav.Link href="">My Favorites</Nav.Link>
-                  <Nav.Link href="">Add Snippet</Nav.Link>
+                  <Link to={"/allposts"} style={{marginLeft: '15px'}}>All Posts</Link>
+                  <Link to={"/myposts"} style={{marginLeft: '15px'}}>My Posts</Link>
+                  <Link to={"/favorites"} style={{marginLeft: '15px'}}>My Favorites</Link>
+                  <Link to={"/create"} style={{marginLeft: '15px'}}>Add Post</Link>
                 </Nav>
                 <Nav>
                   <Nav.Link onClick={handleLogOut}>LogOut</Nav.Link>
@@ -35,12 +35,8 @@ function Navibar({ user, setUser }) {
                   <Nav.Link href="">All Snippets</Nav.Link>
                 </Nav>
                 <Nav>
-                 
-                    <Link to={"./login"}>LogIn</Link>
-                  
-                  
-                    <Link to={"./signup"}>SignUp</Link>
-                 
+                  <Link to={"./login"}>LogIn</Link>
+                  <Link to={"./signup"}>SignUp</Link>
                 </Nav>
               </>
             )}
