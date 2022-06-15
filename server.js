@@ -28,7 +28,7 @@ app.use('/api/users', require('./routes/api/users'));
 
 // Protect the api routes below from anonymous users
 const ensureLoggedIn = require('./config/ensureLoggedIn');
-
+app.use('/api/posts', require('./routes/api/posts'));
 
 // The following "catch all" route (note the *) 
 // is necessary to return the index.html on ALL
@@ -36,7 +36,6 @@ const ensureLoggedIn = require('./config/ensureLoggedIn');
 app.get('/*', function(req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
-
 
 // Configure express app to listen on port 3001
 // to avoid conflicting with the react server
