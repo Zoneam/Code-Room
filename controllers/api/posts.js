@@ -7,6 +7,7 @@ module.exports = {
   createNewPost,
   addLike,
   getFullPost,
+  addComment,
 };
 
 // Get All Public Posts
@@ -65,3 +66,18 @@ async function getFullPost(req, res) {
   res.json(post);
 }
 
+// Add Comment
+async function addComment(req, res) {
+  let comment = {
+    commentText:req.body.comment,
+    author: req.user._id,
+  }
+  console.log("--------------------------------", comment)
+  Post.findOne({ _id: req.params.id }, async function(err,found){
+    found.comments.push(comment)
+    await found.save();
+    
+    res.json(found);
+  })
+  
+}

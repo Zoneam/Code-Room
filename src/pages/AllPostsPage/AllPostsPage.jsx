@@ -14,7 +14,6 @@ export default function AllPostsPage({user}) {
         getPosts();
       },[]);
 
-
     async function handleLike(postId) { 
         const allPosts = await postsAPI.addLike(postId);
         setAllPosts(allPosts.reverse());

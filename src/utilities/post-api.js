@@ -27,3 +27,7 @@ export function addLike(postId) {
 export function getPost(id) {
   return sendRequest(`${BASE_URL}/allposts/post/${id}`);
 }
+
+export function addComment(id, comment) {
+  return sendRequest(`${BASE_URL}/post/${id}`, 'POST', { comment });
+}

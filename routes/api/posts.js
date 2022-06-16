@@ -10,5 +10,5 @@ router.put('/like/:postId',ensureLoggedIn,  postsCtrl.addLike);
 router.get('/myposts',ensureLoggedIn,  postsCtrl.getMyPosts);
 router.get('/allposts', ensureLoggedIn, postsCtrl.getAllPosts);
 router.get('/allposts/post/:id',ensureLoggedIn,  postsCtrl.getFullPost);
-
+router.post('/post/:id',ensureLoggedIn,  postsCtrl.addComment);
 module.exports = router;
