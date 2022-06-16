@@ -9,8 +9,10 @@ import SignUpForm from '../../components/SignUpForm/SignUpForm';
 import MyPostsPage from '../MyPostsPage/MyPostsPage'
 import AllPostsPage from '../AllPostsPage/AllPostsPage'
 import FullPostPage from '../FullPostPage/FullPostPage'
+import { useNavigate, Navigate } from "react-router-dom";
 function App() {
   const [user, setUser] = useState(getUser());
+  const navigate = useNavigate();
 
   return (
     <div className="App">
@@ -19,15 +21,14 @@ function App() {
       <Navibar user={user} setUser={setUser}/>
 
       <Routes>
-        <Route path="/login" element={<LoginForm setUser={setUser}/>}/>
-        <Route path="/signup" element={<SignUpForm setUser={setUser}/>}/>
+      <Route path="/" element={user?<Navigate to="/myposts" />:<LoginForm setUser={setUser}/>}/>
+        <Route path="/login" element={user?<Navigate to="/myposts" />:<LoginForm setUser={setUser}/>}/>
+        <Route path="/signup" element={<SignUpForm setUser={setUser} navigate={navigate}/>}/>
         <Route path="/myposts" element={<MyPostsPage/>}/>
         <Route path="/allposts" element={<AllPostsPage user={user}/>}/>
         <Route path="/allposts/post/:id" element={<FullPostPage/>}/>
         <Route path="/create" element={<CreatePostPage/>}/>
       </Routes>
-
-
     </div>
   );
 }

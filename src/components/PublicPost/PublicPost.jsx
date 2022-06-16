@@ -3,6 +3,11 @@ import Badge from "react-bootstrap/Badge";
 import { Link } from "react-router-dom";
 
 export default function Post({ myPost, handleLike, user }) {
+
+  const handleCopy = (e) => {
+    navigator.clipboard.writeText(myPost.code);
+  };
+
   return (
     <>
       <div style={{ width: "60%" }}>
@@ -14,6 +19,7 @@ export default function Post({ myPost, handleLike, user }) {
             border: "7px solid #0e004d",
             borderRadius: "15px 15px 0 0",
             backgroundColor: "#fffdea",
+            minWidth:"600px",
           }}
         >
           <Badge
@@ -51,6 +57,7 @@ export default function Post({ myPost, handleLike, user }) {
             </span>
           </div>
           <div>
+          <i className="fa-solid fa-copy fa-xl" onClick={handleCopy} style={{ cursor: "pointer", marginRight: "20px",position: 'absolute', top: '45px',zIndex: '10',right: '-10px',color: '#5d96da' }}></i>
             <i
               className="fa-regular fa-comment fa-xl"
               style={{ marginRight: "20px" }}
@@ -79,6 +86,7 @@ export default function Post({ myPost, handleLike, user }) {
             disabled
             style={{
               fontSize: 12,
+              minWidth:"600px",
               maxHeight: "200px",
               backgroundColor: "#0D004D",
               overflowY: "auto",
@@ -93,6 +101,7 @@ export default function Post({ myPost, handleLike, user }) {
             borderRadius: "0 0 15px 15px",
             textAlign: "left",
             backgroundColor: "#fffdea",
+            minWidth:"600px",
           }}
         >
           <span style={{ marginLeft: "10px" }}>

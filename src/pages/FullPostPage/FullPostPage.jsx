@@ -28,7 +28,9 @@ const handleAddComment = async (e) =>{
     setComment('')
   }
 }
-
+const handleCopy = (e) => {
+  navigator.clipboard.writeText(post);
+};
 
   useEffect(function () {
     async function getPost() {
@@ -38,9 +40,25 @@ const handleAddComment = async (e) =>{
     getPost();
   }, []);
   console.log(post)
+  console.log(post.author)
+
   return (
     <>
       <div style={{ width: "90%", margin: "50px auto" }}>
+      <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            position: "relative",
+            border: "7px solid #0e004d",
+            borderRadius: "15px 15px 0 0",
+            backgroundColor: "#fffdea",
+            minWidth:"600px",
+            height:'35px'
+          }}
+        >
+      <i className="fa-solid fa-copy fa-xl" onClick={handleCopy} style={{ cursor: "pointer", marginRight: "20px",position: 'absolute', top: '45px',zIndex: '10',right: '-1%',color: '#5d96da' }}></i>
+      </div>
         <CodeEditor
           language="js"
           placeholder="Paste snipped here"
@@ -50,12 +68,13 @@ const handleAddComment = async (e) =>{
           disabled
           style={{
             fontSize: 12,
+            minWidth:"600px",
             backgroundColor: "#0D004D",
             fontFamily:
               "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
           }}
         />
-        <InputGroup className="mb-3">
+        <InputGroup className="mb-3" style={{minWidth:"600px",}}>
           <Form.Control
           value={comment}
           onChange={handleChange}

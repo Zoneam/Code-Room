@@ -81,7 +81,7 @@ export default function CreatePostPage() {
             }}
           />
 
-          <Button variant="primary" type="submit" size="lg">
+          <Button variant="primary" type="submit" size="lg" style={{marginTop:'15px'}}>
             Save
           </Button>
         </Form>
