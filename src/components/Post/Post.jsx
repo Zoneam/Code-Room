@@ -22,6 +22,7 @@ export default function Post({ myPost, handleLock }) {
             backgroundColor: "#fffdea",
             minWidth:"600px",
             position: "relative",
+            height: '40px',
           }}
         >
           <Badge
@@ -35,6 +36,15 @@ export default function Post({ myPost, handleLock }) {
           >
             {myPost.title}
           </Badge>
+          <span style={{top: '2px', marginRight: "5px",right: '0.5rem',position: 'absolute' }}>
+            <i onClick={(e)=>handleLock(myPost._id)}
+              className={
+                myPost.public
+                  ? "fa-solid fa-lock-open fa-xl"
+                  : "fa-solid fa-lock fa-xl"
+              }
+            />
+          </span>
           <div>
           <button type="button" onClick={handleCopy} className="btn btn-outline-light btn-sm" style={{cursor: "pointer", position: "absolute", right:'0.5rem', top:'1.9rem',zIndex:'15'}}>Copy</button>
 
@@ -69,15 +79,7 @@ export default function Post({ myPost, handleLock }) {
           }}
         >
           <span style={{ marginLeft: "10px" }}>{myPost.description}</span>
-          <span style={{ marginRight: "15px" }}>
-            <i onClick={(e)=>handleLock(myPost._id)}
-              className={
-                myPost.public
-                  ? "fa-solid fa-lock-open fa-xl"
-                  : "fa-solid fa-lock fa-xl"
-              }
-            />
-          </span>
+          
         </div>
       </div>
     </>
