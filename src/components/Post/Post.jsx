@@ -35,8 +35,8 @@ const handleCopy = (e) => {
         
         <Button style={{position: 'absolute',backgroundColor: '#0D004D'}} onClick={handleCopy}>Copy</Button>
         </div>
-        <div style={{border: '2px solid gray'}}>
-            <span>{myPost.description}</span>
+        <div style={{textAlign:'left',border: '2px solid gray'}}>
+            <span >{myPost.description}</span>
             <span>Public:{myPost.public?'True':'False'}</span>
         </div>
 

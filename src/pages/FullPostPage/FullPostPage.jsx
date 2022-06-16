@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import * as postsAPI from '../../utilities/post-api';
+import Card from 'react-bootstrap/Card';
 
 export default function CreatePostPage() {
   const [comment,setComment] = useState('')
@@ -34,6 +35,7 @@ const handleAddComment = async (e) =>{
     }
     getPost();
   }, []);
+  console.log(post)
   return (
     <>
       <div style={{ width: "90%", margin: "50px auto" }}>
@@ -63,10 +65,25 @@ const handleAddComment = async (e) =>{
           </Button>
         </InputGroup>
       </div>
+      <div style={{width:'60%',margin:'50px auto'}}>
       {post.comments.map((c,i) => {
-        return <h1 key={i}>{c.commentText}</h1>
+        return (
+              <Card key={i} style={{margin:'50px auto'}}>
+          <Card.Header><div style={{display:'flex',justifyContent:'space-between'}}><span>Comment by {c.username}</span>  <span>{c.dateCreated.split("T")[0]}</span></div></Card.Header>
+          
+          <Card.Body>
+            <blockquote className="blockquote mb-0">
+              <p style={{textAlign:'left'}}>
+                {c.commentText}
+              </p>
+             
+            </blockquote>
+          </Card.Body>
+        </Card>
+        )
       })
-        }    
+        } 
+        </div>   
         </>
   );
 }

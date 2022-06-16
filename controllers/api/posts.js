@@ -1,5 +1,6 @@
 const Post = require("../../models/post");
 const Like = require("../../models/like");
+const User = require("../../models/user");
 
 module.exports = {
   getAllPosts,
@@ -54,7 +55,7 @@ async function addLike(req, res) {
   .populate("likes")
   .populate("author")
   .exec(function (err, posts) {
-    console.log(posts)
+
     res.json(posts);
   });
 })
@@ -72,12 +73,19 @@ async function addComment(req, res) {
     commentText:req.body.comment,
     author: req.user._id,
   }
-  console.log("--------------------------------", comment)
-  Post.findOne({ _id: req.params.id }, async function(err,found){
-    found.comments.push(comment)
-    await found.save();
-    
-    res.json(found);
+
+  User.findOne({ id: req.params.id}, async function(err,foundUser) {
+    console.log(foundUser,req.params.id);
+    comment.username = foundUser.name
+
+    Post.findOne({ _id: req.params.id }, async function(err,found){
+      found.comments.push(comment)
+      await found.save();
+      res.json(found);
+    })
+
   })
+  
+
   
 }

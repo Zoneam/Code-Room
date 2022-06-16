@@ -18,7 +18,7 @@ export default function Post({myPost, handleLike, user}) {
             <Badge bg="primary" style={{position: 'relative',zIndex: '15',left: '10px',top: '12px'}}>{myPost.title}</Badge>
         </Link>
             <div>
-              <i className="fa-regular fa-comment" >3</i>
+              <i className="fa-regular fa-comment" >{myPost.comments.length}</i>
               <i className={myPost.likes.users.includes(user._id)?'fas fa-heart':'fas fa-heart-broken'} onClick={() => handleLike(myPost._id)}>{myPost.likes.users.length}</i>
               
               
