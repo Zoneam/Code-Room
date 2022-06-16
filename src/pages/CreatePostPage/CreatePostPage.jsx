@@ -40,6 +40,7 @@ export default function CreatePostPage() {
               aria-describedby="inputGroup-sizing-sm"
               placeholder="Title"
               value={post.title}
+              required
               name="title"
               onChange={handleChange}
             />
@@ -54,6 +55,7 @@ export default function CreatePostPage() {
               placeholder="Description"
               value={post.description}
               name="description"
+              required
               onChange={handleChange}
             />
           </FloatingLabel>
@@ -68,6 +70,7 @@ export default function CreatePostPage() {
             placeholder="Paste snipped here"
             onChange={handleChange}
             name="code"
+            required
             padding={15}
             style={{
               fontSize: 12,

@@ -22,9 +22,11 @@ const handleChange = (e) => {
 
 
 const handleAddComment = async (e) =>{
-  const post = await postsAPI.addComment(params.id, comment);
-  setPost(post);
-  setComment('')
+  if(comment !== ''){
+    const post = await postsAPI.addComment(params.id, comment);
+    setPost(post);
+    setComment('')
+  }
 }
 
 
@@ -60,7 +62,7 @@ const handleAddComment = async (e) =>{
             placeholder="Comment"
             aria-label="Comment"
           />
-          <Button variant="primary" id="button-addon2" onClick={handleAddComment}>
+          <Button variant="primary" id="button-addon2" onClick={handleAddComment} required>
             Add Comment
           </Button>
         </InputGroup>
