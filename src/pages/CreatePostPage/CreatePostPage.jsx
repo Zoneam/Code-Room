@@ -41,6 +41,7 @@ export default function CreatePostPage() {
               placeholder="Title"
               value={post.title}
               required
+              maxLength="65"
               name="title"
               onChange={handleChange}
             />

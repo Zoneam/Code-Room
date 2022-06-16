@@ -14,7 +14,6 @@ function Navibar({ user, setUser }) {
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Container>
           <Navbar.Brand href="#home">Code Room</Navbar.Brand>
-
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             {user ? (
@@ -26,17 +25,14 @@ function Navibar({ user, setUser }) {
                   <Link to={"/create"} style={{marginLeft: '15px'}}>Add Post</Link>
                 </Nav>
                 <Nav>
-                  <Nav.Link onClick={handleLogOut}>LogOut</Nav.Link>
+                  <Link to={'./login'} onClick={handleLogOut}>LogOut</Link>
                 </Nav>
               </>
             ) : (
               <>
-                <Nav className="me-auto">
-                  <Nav.Link href="">All Snippets</Nav.Link>
-                </Nav>
                 <Nav>
-                  <Link to={"./login"}>LogIn</Link>
-                  <Link to={"./signup"}>SignUp</Link>
+                  <Link to={"./login"} style={{marginLeft: '15px'}}>LogIn</Link>
+                  <Link to={"./signup"} style={{marginLeft: '15px'}}>SignUp</Link>
                 </Nav>
               </>
             )}

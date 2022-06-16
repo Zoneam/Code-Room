@@ -5,7 +5,6 @@ import PublicPost from '../../components/PublicPost/PublicPost'
 
 export default function AllPostsPage({user}) {
     const [allPosts, setAllPosts] = useState([]);
-
     useEffect(function() {
         async function getPosts() {
           const allPosts = await postsAPI.getAllPosts();
