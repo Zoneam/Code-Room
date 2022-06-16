@@ -1,12 +1,14 @@
 import CodeEditor from "@uiw/react-textarea-code-editor";
 import Badge from "react-bootstrap/Badge";
-import Button from "react-bootstrap/Button";
 
-export default function Post({ myPost }) {
+
+export default function Post({ myPost, handleLock }) {
   console.log(myPost);
   const handleCopy = (e) => {
     navigator.clipboard.writeText(myPost.code)
   };
+
+
 
   return (
     <>
@@ -36,7 +38,7 @@ export default function Post({ myPost }) {
           <div>
           <button type="button" onClick={handleCopy} className="btn btn-outline-light btn-sm" style={{cursor: "pointer", position: "absolute", right:'0.5rem', top:'1.9rem',zIndex:'15'}}>Copy</button>
 
-          <span style={{marginRight:'5px'}}>{myPost.dateCreated.split('T')[0]}</span>
+
           </div>
         </div>
   
@@ -68,7 +70,7 @@ export default function Post({ myPost }) {
         >
           <span style={{ marginLeft: "10px" }}>{myPost.description}</span>
           <span style={{ marginRight: "15px" }}>
-            <i
+            <i onClick={(e)=>handleLock(myPost._id)}
               className={
                 myPost.public
                   ? "fa-solid fa-lock-open fa-xl"

@@ -55,6 +55,8 @@ export default function Post({ myPost, handleLike, user }) {
             >
               {myPost.author.name}
             </span>
+            <span style={{fontSize: "10px", lineHeight:'0',position: 'relative', top:'-10px'}}>{myPost.dateCreated.split('T')[0]}</span>
+
           </div>
           <div>
           <button type="button" onClick={handleCopy} className="btn btn-outline-light btn-sm" style={{cursor: "pointer", position: "absolute", right:'0.5rem', top:'1.9rem',zIndex:'15'}}>Copy</button>
@@ -102,6 +104,7 @@ export default function Post({ myPost, handleLike, user }) {
             textAlign: "left",
             backgroundColor: "#fffdea",
             minWidth:"600px",
+            padding:'7px'
           }}
         >
           <span style={{ marginLeft: "10px" }}>
@@ -113,7 +116,6 @@ export default function Post({ myPost, handleLike, user }) {
                 marginRight: "10px",
               }}
             >
-              {myPost.dateCreated.split("T")[0]}
             </span>
           </span>
         </div>

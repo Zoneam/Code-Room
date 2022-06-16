@@ -9,6 +9,7 @@ module.exports = {
   addLike,
   getFullPost,
   addComment,
+  addLock,
 };
 
 // Get All Public Posts
@@ -36,13 +37,11 @@ async function createNewPost(req, res) {
 // Get all my posts
 async function getMyPosts(req, res) {
   const posts = await Post.find({ author: req.user._id });
-  console.log(posts)
   res.json(posts);
 }
 
 // Add Like
 async function addLike(req, res) {
-  console.log(req.params.postId)
   Like.findOne({ post: req.params.postId }, async function(err,found){
     if(!found.users.includes(req.user._id)){
         found.users.push(req.user._id);
@@ -61,7 +60,6 @@ async function addLike(req, res) {
 })
 }
 
-
 async function getFullPost(req, res) {
   const post = await Post.find({ _id: req.params.id });
   res.json(post);
@@ -73,11 +71,9 @@ async function addComment(req, res) {
     commentText:req.body.comment,
     author: req.user._id,
   }
-
   User.findOne({ id: req.params.id}, async function(err,foundUser) {
     console.log(foundUser,req.params.id);
     comment.username = foundUser.name
-
     Post.findOne({ _id: req.params.id }, async function(err,found){
       found.comments.push(comment)
       await found.save();
@@ -85,7 +81,17 @@ async function addComment(req, res) {
     })
 
   })
-  
+}
 
-  
+
+// Add Lock
+async function addLock(req, res) {
+    Post.findOne({ _id: req.params.id }, async function(err,found){
+      found.public = !found.public
+      console.log("LOCKIIIING",found)
+      await found.save();
+      const posts = await Post.find({ author: req.user._id });
+      res.json(posts);
+    })
+
 }

@@ -12,10 +12,16 @@ export default function MyPostsPage() {
         getPosts();
       },[]);
 
+      const handleLock = async (id)=>{
+        console.log('Id',id)
+        const post = await postsAPI.addLock(id);
+        setMyPosts(post.reverse());
+      }
+
       const posts = myPosts.map((myPost,i) => {
          return( 
          <div key={i} style= {{width:'100%', margin:'50px auto', display: 'flex', justifyContent: 'center', }}>
-            <Post myPost={myPost} key={i}/>
+            <Post myPost={myPost} key={i} handleLock={handleLock}/>
           </div>
         )
       })

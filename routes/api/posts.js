@@ -11,4 +11,5 @@ router.get('/myposts',ensureLoggedIn,  postsCtrl.getMyPosts);
 router.get('/allposts', postsCtrl.getAllPosts);
 router.get('/allposts/post/:id', postsCtrl.getFullPost);
 router.post('/post/:id', ensureLoggedIn,  postsCtrl.addComment);
+router.put('/myposts/:id', ensureLoggedIn,  postsCtrl.addLock);
 module.exports = router;
