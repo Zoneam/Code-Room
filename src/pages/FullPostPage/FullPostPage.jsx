@@ -29,7 +29,7 @@ const handleAddComment = async (e) =>{
   }
 }
 const handleCopy = (e) => {
-  navigator.clipboard.writeText(post);
+  navigator.clipboard.writeText(post.code);
 };
 
   useEffect(function () {
@@ -44,7 +44,7 @@ const handleCopy = (e) => {
 
   return (
     <>
-      <div style={{ width: "90%", margin: "50px auto" }}>
+      <div style={{ width: "90%", margin: "50px auto",  }}>
       <div
           style={{
             display: "flex",
@@ -54,11 +54,15 @@ const handleCopy = (e) => {
             borderRadius: "15px 15px 0 0",
             backgroundColor: "#fffdea",
             minWidth:"600px",
-            height:'35px'
+       
           }}
         >
-      <i className="fa-solid fa-copy fa-xl" onClick={handleCopy} style={{ cursor: "pointer", marginRight: "20px",position: 'absolute', top: '45px',zIndex: '10',right: '-1%',color: '#5d96da' }}></i>
+          <p>{post.description}</p>
       </div>
+
+      <div style={{position:"relative"}}>
+<button type="button" onClick={handleCopy} className="btn btn-outline-light btn-sm" style={{cursor: "pointer", position: "absolute", right:'0.5rem', top:'o.5rem',zIndex:'15'}}>Copy</button>
+
         <CodeEditor
           language="js"
           placeholder="Paste snipped here"
@@ -74,6 +78,8 @@ const handleCopy = (e) => {
               "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
           }}
         />
+
+       </div>
         <InputGroup className="mb-3" style={{minWidth:"600px",}}>
           <Form.Control
           value={comment}

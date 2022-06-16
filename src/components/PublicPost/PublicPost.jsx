@@ -57,7 +57,7 @@ export default function Post({ myPost, handleLike, user }) {
             </span>
           </div>
           <div>
-          <i className="fa-solid fa-copy fa-xl" onClick={handleCopy} style={{ cursor: "pointer", marginRight: "20px",position: 'absolute', top: '45px',zIndex: '10',right: '-10px',color: '#5d96da' }}></i>
+          <button type="button" onClick={handleCopy} className="btn btn-outline-light btn-sm" style={{cursor: "pointer", position: "absolute", right:'0.5rem', top:'1.9rem',zIndex:'15'}}>Copy</button>
             <i
               className="fa-regular fa-comment fa-xl"
               style={{ marginRight: "20px" }}
