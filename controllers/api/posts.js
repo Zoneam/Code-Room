@@ -74,7 +74,7 @@ async function addComment(req, res) {
     author: req.user._id,
   }
   User.findOne({ id: req.params.id}, async function(err,foundUser) {
-    console.log(foundUser,req.params.id);
+
     comment.username = foundUser.name
     Post.findOne({ _id: req.params.id }, async function(err,found){
       found.comments.push(comment)
@@ -116,7 +116,6 @@ async function getUserPosts(req, res) {
   .populate("likes")
   .exec(function (err, posts) {
     res.json(posts); 
-     console.log(posts)
   });
 
 

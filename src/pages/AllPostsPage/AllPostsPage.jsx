@@ -18,11 +18,6 @@ export default function AllPostsPage({user}) {
         setAllPosts(allPosts.reverse());
       }
 
-      // async function handleUserClick(postId) { 
-      // console.log(postId)
-      //   const allPosts = await postsAPI.getUserPosts(postId);
-      //   setAllPosts(allPosts.reverse());
-      // }
 
       const posts = allPosts.map((post,i) => {
          return( 

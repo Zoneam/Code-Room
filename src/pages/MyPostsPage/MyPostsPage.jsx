@@ -20,7 +20,6 @@ export default function MyPostsPage() {
   const handleDelete = async (id) => {
     const posts = await postsAPI.deletePost(id);
     setMyPosts(posts.reverse());
-    console.log("Id", posts);
   };
 
   const posts = myPosts.map((myPost, i) => {

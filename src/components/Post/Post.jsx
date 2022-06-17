@@ -8,7 +8,6 @@ export default function Post({ myPost, handleLock, handleDelete }) {
   const handleCopy = (e) => {
     navigator.clipboard.writeText(myPost.code)
   };
-console.log("POST COMPONENT--------")
   return (
     <>
       <div style={{ width: "60%" }}>

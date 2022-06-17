@@ -39,8 +39,6 @@ const handleCopy = (e) => {
     }
     getPost();
   }, []);
-  console.log(post)
-  console.log(post.author)
 
   return (
     <>
