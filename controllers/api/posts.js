@@ -11,6 +11,7 @@ module.exports = {
   addComment,
   addLock,
   deletePost,
+  getUserPosts,
 };
 
 // Get All Public Posts
@@ -98,10 +99,25 @@ async function addLock(req, res) {
 
 // Delete Post
 async function deletePost(req, res) {
-  console.log(req.params.id )
   Post.deleteOne({_id: req.params.id }, async function(err){
     const posts = await Post.find({ author: req.user._id });
     res.json(posts);
   })
+
+}
+
+
+// Get all user posts
+async function getUserPosts(req, res) {
+
+
+  const posts = await Post.find({$and:[{ public: true }, {author: req.params.id}]})
+  .populate("author")
+  .populate("likes")
+  .exec(function (err, posts) {
+    res.json(posts); 
+     console.log(posts)
+  });
+
 
 }

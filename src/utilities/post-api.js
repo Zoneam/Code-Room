@@ -41,3 +41,7 @@ export function deletePost(id) {
   return sendRequest(`${BASE_URL}/myposts/${id}`, 'DELETE');
 }
 
+export function getUserPosts(postId) {
+  console.log(postId)
+  return sendRequest(`${BASE_URL}/userposts/${postId}`);
+}

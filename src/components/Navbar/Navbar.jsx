@@ -19,20 +19,20 @@ function Navibar({ user, setUser }) {
             {user ? (
               <>
                 <Nav className="me-auto">
-                  <Link to={"/allposts"} style={{marginLeft: '15px'}}>All Posts</Link>
-                  <Link to={"/myposts"} style={{marginLeft: '15px'}}>My Posts</Link>
-                  <Link to={"/favorites"} style={{marginLeft: '15px'}}>My Favorites</Link>
-                  <Link to={"/create"} style={{marginLeft: '15px'}}>Add Post</Link>
+                  <Link to={"/allposts"} style={{marginLeft: '15px', color: '#fffd7e'}}>All Posts</Link>
+                  <Link to={"/myposts"} style={{marginLeft: '15px',color: '#fffd7e'}}>My Posts</Link>
+                  <Link to={"/favorites"} style={{marginLeft: '15px', color: '#fffd7e'}}>My Favorites</Link>
+                  <Link to={"/create"} style={{marginLeft: '15px', color: '#fffd7e'}}>Add Post</Link>
                 </Nav>
                 <Nav>
-                  <Link to={'./login'} onClick={handleLogOut}>LogOut</Link>
+                  <Link style={{ color: '#fffd7e'}} to={'./login'} onClick={handleLogOut}>LogOut</Link>
                 </Nav>
               </>
             ) : (
               <>
                 <Nav>
-                  <Link to={"./login"} style={{marginLeft: '15px'}}>LogIn</Link>
-                  <Link to={"./signup"} style={{marginLeft: '15px'}}>SignUp</Link>
+                  <Link to={"./login"} style={{marginLeft: '15px', color: '#fffd7e'}}>LogIn</Link>
+                  <Link to={"./signup"} style={{marginLeft: '15px', color: '#fffd7e'}}>SignUp</Link>
                 </Nav>
               </>
             )}

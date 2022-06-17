@@ -2,11 +2,12 @@ import CodeEditor from "@uiw/react-textarea-code-editor";
 import Badge from "react-bootstrap/Badge";
 import { Link } from "react-router-dom";
 import "./PublicPost.css";
-export default function Post({ myPost, handleLike, user }) {
+
+export default function Post({ myPost, handleLike, user}) {
   const handleCopy = (e) => {
     navigator.clipboard.writeText(myPost.code);
   };
-
+console.log(myPost)
   return (
     <>
       <div style={{ width: "60%" }}>
@@ -14,7 +15,11 @@ export default function Post({ myPost, handleLike, user }) {
           <Badge className="public-badge" bg="primary">
             {myPost.title}
           </Badge>
-          <div className="public-code-wrapper">
+          <Link
+          to={`/userposts/${myPost.author._id}`}
+          style={{ cursor: "pointer", textDecoration: "none",cursor: "pointer", }}
+        >
+          <div className="public-code-wrapper" >
             <i
               className="fa-solid fa-user fa-xl"
               style={{ marginTop: "15px", color: "rgb(46 0 255)" }}>
@@ -37,6 +42,9 @@ export default function Post({ myPost, handleLike, user }) {
               {myPost.dateCreated.split("T")[0]}
             </span>
           </div>
+          </Link>
+
+
           <div style={{ height: '24px',alignItems: 'center',display: 'flex'}}>
             <button
               type="button"
