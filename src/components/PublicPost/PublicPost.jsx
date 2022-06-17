@@ -79,7 +79,7 @@ console.log(myPost)
           </div>
         </div>
         <Link
-          to={`./post/${myPost._id}`}
+          to={`/allposts/post/${myPost._id}`}
           style={{ cursor: "pointer", textDecoration: "none",cursor: "pointer", }}
         >
           <CodeEditor
