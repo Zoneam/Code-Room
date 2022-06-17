@@ -57,7 +57,7 @@ const handleCopy = (e) => {
        
           }}
         >
-          <p>{post.description}</p>
+          <p style={{marginLeft: '8px'}}>{post.description}</p>
       </div>
 
       <div style={{position:"relative"}}>

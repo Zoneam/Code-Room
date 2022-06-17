@@ -58,6 +58,7 @@ export default function CreatePostPage() {
               name="description"
               required
               onChange={handleChange}
+              style={{height:'100px'}}
             />
           </FloatingLabel>
 
@@ -75,6 +76,7 @@ export default function CreatePostPage() {
             padding={15}
             style={{
               fontSize: 12,
+              height:'400px',
               backgroundColor: "#0D004D",
               fontFamily:
                 "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",

@@ -1,0 +1,83 @@
+.public-outer-wrapper {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  border: 7px solid #0e004d;
+  border-radius: 15px 15px 0 0;
+  background-color: #fffdea;
+  min-width: 600px;
+}
+
+.public-badge {
+  position: relative;
+  z-index: 15;
+  left: 10px;
+  top: 12px;
+}
+
+.public-code-wrapper {
+  border: 4px solid rgb(46 0 255);
+  box-shadow: 4px 7px 14px 0px rgba(0, 0, 0.59);
+  width: 80px;
+  height: 80px;
+  position: absolute;
+  top: -140%;
+  right: 50%;
+  z-index: 15;
+  border-radius: 50%;
+  background-color: beige;
+}
+
+.copy-btn {
+  cursor: pointer;
+  position: absolute;
+  right: 0.7rem;
+  top: 1.9rem;
+  z-index: 15;
+  border-color: blue !important;
+}
+
+.code-editor{
+  cursor:crosshair !important;
+  font-size: 12;
+  min-width: 600px;
+  max-height: 200px;
+  background-color: #0D004D;
+  overflow-y: auto !important;
+  font-family: ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace;
+}
+
+.code-editor::-webkit-scrollbar {
+  width: 8px;               /* width of the entire scrollbar */
+}
+
+.code-editor::-webkit-scrollbar-track {
+  background: rgb(100, 100, 171);        /* color of the tracking area */
+}
+
+.code-editor::-webkit-scrollbar-thumb {
+  background-color: rgb(28, 20, 255);    /* color of the scroll thumb */
+  border-radius: 15px;       /* roundness of the scroll thumb */
+  border: 2px solid rgb(159, 225, 243);  /* creates padding around scroll thumb */
+}
+
+
+.code-editor:hover{
+  background-color:rgb(0, 0, 137);
+}
+
+textarea{
+  cursor: pointer;
+}
+
+.srtik {
+  font-size: 22px;
+  -webkit-transition:  font-size 0.5s;
+  -moz-transition:  font-size 0.5s;
+  -o-transition:  font-size 0.5s;
+  transition:  font-size 0.5s;
+}
+
+.srtik:hover {
+  font-size: 36px;
+}

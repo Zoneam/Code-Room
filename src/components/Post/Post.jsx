@@ -28,6 +28,9 @@ export default function Post({ myPost, handleLock }) {
           <Badge
             bg="primary"
             style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
               position: "relative",
               zIndex: "15",
               left: "10px",
@@ -36,7 +39,7 @@ export default function Post({ myPost, handleLock }) {
           >
             {myPost.title}
           </Badge>
-          <span style={{top: '2px', marginRight: "5px",right: '0.5rem',position: 'absolute' }}>
+          <span style={{top: '2px', marginRight: "5px",right: '0.5rem',position: 'absolute',cursor: "pointer", }}>
             <i onClick={(e)=>handleLock(myPost._id)}
               className={
                 myPost.public
@@ -46,26 +49,19 @@ export default function Post({ myPost, handleLock }) {
             />
           </span>
           <div>
-          <button type="button" onClick={handleCopy} className="btn btn-outline-light btn-sm" style={{cursor: "pointer", position: "absolute", right:'0.5rem', top:'1.9rem',zIndex:'15'}}>Copy</button>
+          <button type="button" onClick={handleCopy} className="btn btn-outline-light btn-sm copy-btn" >Copy</button>
 
 
           </div>
         </div>
   
           <CodeEditor
+          className='code-editor'
             value={myPost.code}
             language="js"
             placeholder="Please enter JS code."
             padding={15}
-            style={{
-              fontSize: 12,
-              maxHeight: "200px",
-              minWidth:"600px",
-              backgroundColor: "#0D004D",
-              overflowY: "auto",
-              fontFamily:
-                "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
-            }}
+           
           />
         <div
           style={{
