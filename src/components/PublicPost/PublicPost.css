@@ -13,6 +13,7 @@
   z-index: 15;
   left: 10px;
   top: 12px;
+  user-select: none;
 }
 
 .public-code-wrapper {
@@ -26,6 +27,7 @@
   z-index: 15;
   border-radius: 50%;
   background-color: beige;
+  user-select: none;
 }
 
 .copy-btn {
@@ -81,3 +83,4 @@ textarea{
 .srtik:hover {
   font-size: 36px;
 }
+

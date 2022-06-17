@@ -35,3 +35,9 @@ export function addComment(id, comment) {
 export function addLock(id) {
   return sendRequest(`${BASE_URL}/myposts/${id}`, 'PUT');
 }
+
+
+export function deletePost(id) {
+  return sendRequest(`${BASE_URL}/myposts/${id}`, 'DELETE');
+}
+

@@ -10,6 +10,7 @@ module.exports = {
   getFullPost,
   addComment,
   addLock,
+  deletePost,
 };
 
 // Get All Public Posts
@@ -86,12 +87,21 @@ async function addComment(req, res) {
 
 // Add Lock
 async function addLock(req, res) {
-    Post.findOne({ _id: req.params.id }, async function(err,found){
+    Post.findOne({_id: req.params.id }, async function(err,found){
       found.public = !found.public
-      console.log("LOCKIIIING",found)
       await found.save();
       const posts = await Post.find({ author: req.user._id });
       res.json(posts);
     })
+
+}
+
+// Delete Post
+async function deletePost(req, res) {
+  console.log(req.params.id )
+  Post.deleteOne({_id: req.params.id }, async function(err){
+    const posts = await Post.find({ author: req.user._id });
+    res.json(posts);
+  })
 
 }

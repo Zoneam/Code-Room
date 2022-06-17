@@ -1,81 +1,47 @@
 import CodeEditor from "@uiw/react-textarea-code-editor";
 import Badge from "react-bootstrap/Badge";
+import './Post.css'
 
-
-export default function Post({ myPost, handleLock }) {
+export default function Post({ myPost, handleLock, handleDelete }) {
   console.log(myPost);
   const handleCopy = (e) => {
     navigator.clipboard.writeText(myPost.code)
   };
 
-
-
   return (
     <>
       <div style={{ width: "60%" }}>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            border: "7px solid #0e004d",
-            borderRadius: "15px 15px 0 0",
-            backgroundColor: "#fffdea",
-            minWidth:"600px",
-            position: "relative",
-            height: '40px',
-          }}
-        >
-          <Badge
-            bg="primary"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              position: "relative",
-              zIndex: "15",
-              left: "10px",
-              top: "12px",
-            }}
-          >
+        <div className="post-wrapper">
+          <Badge className="post-badge" bg="primary">
             {myPost.title}
           </Badge>
-          <span style={{top: '2px', marginRight: "5px",right: '0.5rem',position: 'absolute',cursor: "pointer", }}>
+          <div>
+          <span className="post-span-f">
             <i onClick={(e)=>handleLock(myPost._id)}
               className={
                 myPost.public
-                  ? "fa-solid fa-lock-open fa-xl"
-                  : "fa-solid fa-lock fa-xl"
+                  ? "fa-solid fa-lock-open fa-xl lock"
+                  : "fa-solid fa-lock fa-xl lock"
               }
             />
           </span>
+          <span>
+          <i onClick={(e)=>handleDelete(myPost._id)} className="fa-solid fa-rectangle-xmark fa-xl close-button"></i>
+          </span>
+          </div>
           <div>
           <button type="button" onClick={handleCopy} className="btn btn-outline-light btn-sm copy-btn" >Copy</button>
-
-
           </div>
         </div>
-  
           <CodeEditor
           className='code-editor'
             value={myPost.code}
             language="js"
             placeholder="Please enter JS code."
             padding={15}
-           
           />
-        <div
-          style={{
-            border: "7px solid #0e004d",
-            borderRadius: "0 0 15px 15px",
-            textAlign: "left",
-            display: "flex",
-            minWidth:"600px",
-            justifyContent: "space-between",
-            backgroundColor: "#fffdea",
-          }}
-        >
+        <div className="post-bottom-div">
           <span style={{ marginLeft: "10px" }}>{myPost.description}</span>
-          
         </div>
       </div>
     </>

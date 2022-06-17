@@ -1,0 +1,73 @@
+.lock {
+  font-size: 22px;
+  -webkit-transition: font-size 0.5s;
+  -moz-transition: font-size 0.5s;
+  -o-transition: font-size 0.5s;
+  transition: font-size 0.5s;
+}
+
+.lock:hover {
+  font-size: 28px;
+}
+
+.post-wrapper {
+  display: flex;
+  justify-content: space-between;
+  border: 7px solid #0e004d;
+  border-radius: 15px 15px 0 0;
+  background-color: #fffdea;
+  min-width: 600px;
+  position: relative;
+  height: 40px;
+}
+
+.post-badge {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 15;
+  left: 10px;
+  top: 12px;
+  user-select: none;
+}
+
+.post-span-f {
+  top: 2px;
+  margin-right: 35px;
+  right: 0.5rem;
+  position: absolute;
+  cursor: pointer;
+}
+
+.post-bottom-div {
+  border: 7px solid #0e004d;
+  border-radius: 0 0 15px 15px;
+  text-align: left;
+  display: flex !important;
+  min-width: 600px;
+  justify-content: space-between;
+  background-color: #fffdea;
+}
+
+.close-button {
+  top: 14px;
+  margin-right: 0px;
+  right: 0.5rem;
+  position: absolute;
+  cursor: pointer;
+  color: rgb(199, 0, 0);
+}
+
+.close-button {
+  font-size: 22px;
+  -webkit-transition: font-size 0.5s;
+  -moz-transition: font-size 0.5s;
+  -o-transition: font-size 0.5s;
+  transition: font-size 0.5s;
+}
+
+.close-button:hover {
+  color: rgb(255, 0, 0);
+  font-size: 28px;
+}
