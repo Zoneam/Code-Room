@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import "./PublicPost.css";
 
 export default function Post({ myPost, handleLike, user}) {
+  console.log(myPost);
+
   const handleCopy = (e) => {
     navigator.clipboard.writeText(myPost.code);
   };
@@ -60,7 +62,7 @@ console.log(myPost)
                   : "fa-xl fas fa-heart-broken srtik"
               }
               style={{ marginRight: "3px", cursor: "pointer", color: "red" }}
-              onClick={() => handleLike(myPost._id)}
+              onClick={() => handleLike(myPost._id,myPost.author._id)}
             >
               
             </i>

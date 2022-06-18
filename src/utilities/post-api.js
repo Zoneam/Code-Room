@@ -45,3 +45,8 @@ export function getUserPosts(postId) {
   console.log(postId)
   return sendRequest(`${BASE_URL}/userposts/${postId}`);
 }
+
+export function addUserLike(postId, authorId) {
+  return sendRequest(`${BASE_URL}/like/${authorId}/${postId}`, 'PUT');
+}
+
