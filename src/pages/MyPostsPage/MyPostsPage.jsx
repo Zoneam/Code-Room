@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import * as postsAPI from "../../utilities/post-api";
 import Post from "../../components/Post/Post";
+import './MyPostsPage.css';
 
 export default function MyPostsPage() {
   const [myPosts, setMyPosts] = useState([]);
@@ -25,15 +26,7 @@ export default function MyPostsPage() {
 
   const posts = myPosts.map((myPost, i) => {
     return (
-      <div
-        key={i}
-        style={{
-          width: "100%",
-          margin: "50px auto",
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
+      <div className='my-posts-psge-wrapper' key={i}>
         <Post
           myPost={myPost}
           key={i}

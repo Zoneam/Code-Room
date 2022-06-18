@@ -7,6 +7,7 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import * as postsAPI from "../../utilities/post-api";
 import Card from "react-bootstrap/Card";
+import "./FullPostPage.css";
 
 export default function CreatePostPage() {
   const [comment, setComment] = useState("");
@@ -22,6 +23,7 @@ export default function CreatePostPage() {
 
   const handleAddComment = async (e) => {
     if (comment !== "") {
+      console.log(params.id)
       const post = await postsAPI.addComment(params.id, comment);
       setPost(post);
       setComment("");
@@ -39,20 +41,12 @@ export default function CreatePostPage() {
     getPost();
   }, []);
 
+
+  console.log(post)
   return (
     <>
       <div style={{ width: "90%", margin: "50px auto" }}>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            position: "relative",
-            border: "7px solid #0e004d",
-            borderRadius: "15px 15px 0 0",
-            backgroundColor: "#fffdea",
-            minWidth: "600px",
-          }}
-        >
+        <div className="full-post-page-header">
           <p style={{ marginLeft: "8px" }}>{post.description}</p>
         </div>
 
@@ -60,15 +54,7 @@ export default function CreatePostPage() {
           <button
             type="button"
             onClick={handleCopy}
-            className="btn btn-outline-light btn-sm"
-            style={{
-              cursor: "pointer",
-              position: "absolute",
-              right: "0.5rem",
-              top: "o.5rem",
-              zIndex: "15",
-            }}
-          >
+            className="btn btn-outline-light btn-sm copy-btn-full">
             Copy
           </button>
 
@@ -94,6 +80,7 @@ export default function CreatePostPage() {
             onChange={handleChange}
             placeholder="Comment"
             aria-label="Comment"
+            style={{backgroundColor: "antiquewhite"}}
           />
           <Button
             variant="primary"
@@ -117,9 +104,8 @@ export default function CreatePostPage() {
                   <span>{c.dateCreated.split("T")[0]}</span>
                 </div>
               </Card.Header>
-
-              <Card.Body>
-                <blockquote className="blockquote mb-0">
+              <Card.Body style={{backgroundColor: "antiquewhite"}}>
+                <blockquote className="blockquote mb-0" >
                   <p style={{ textAlign: "left" }}>{c.commentText}</p>
                 </blockquote>
               </Card.Body>

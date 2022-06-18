@@ -84,6 +84,8 @@ async function addUserLike(req, res) {
 // Get full post page
 async function getFullPost(req, res) {
   const post = await Post.find({ _id: req.params.id });
+  console.log(post[0].comments)
+  post[0].comments = post[0].comments.reverse();
   res.json(post);
 }
 
@@ -93,18 +95,18 @@ async function addComment(req, res) {
     commentText:req.body.comment,
     author: req.user._id,
   }
-  User.findOne({ id: req.params.id}, async function(err,foundUser) {
-    console.log(foundUser,req.params.id);
+  User.findOne({ _id: req.user._id}, async function(err,foundUser) {
+    console.log(foundUser.name,req.user._id);
     comment.username = foundUser.name
     Post.findOne({ _id: req.params.id }, async function(err,found){
       found.comments.push(comment)
       await found.save();
+      found.comments = found.comments.reverse();
       res.json(found);
     })
 
   })
 }
-
 
 // Add Lock
 async function addLock(req, res) {

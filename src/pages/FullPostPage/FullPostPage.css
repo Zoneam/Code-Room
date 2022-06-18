@@ -1,0 +1,17 @@
+.full-post-page-header{
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    border: 7px solid #0e004d;
+    border-radius: 15px 15px 0 0;
+    background-color: #fffdea;
+    min-width: 600px;
+}
+
+ .copy-btn-full{
+        cursor: pointer;
+        position: absolute;
+        right: 0.5rem;
+        top: 0.5rem;
+        z-index: 15;
+ }

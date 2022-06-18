@@ -3,13 +3,13 @@ import Badge from "react-bootstrap/Badge";
 import { Link } from "react-router-dom";
 import "./PublicPost.css";
 
-export default function Post({ myPost, handleLike, user}) {
+export default function Post({ myPost, handleLike, user }) {
   console.log(myPost);
 
   const handleCopy = (e) => {
     navigator.clipboard.writeText(myPost.code);
   };
-console.log(myPost)
+  console.log(myPost);
   return (
     <>
       <div style={{ width: "60%" }}>
@@ -18,36 +18,42 @@ console.log(myPost)
             {myPost.title}
           </Badge>
           <Link
-          to={`/userposts/${myPost.author._id}`}
-          style={{ cursor: "pointer", textDecoration: "none",cursor: "pointer", }}
-        >
-          <div className="public-code-wrapper" >
-            <i
-              className="fa-solid fa-user fa-xl"
-              style={{ marginTop: "15px", color: "rgb(46 0 255)" }}>
-              {" "}
-            </i>
-            <span
-              style={{ display: "block", fontSize: "12px", marginTop: "2px" }}
-            >
-              {myPost.author.name}
-            </span>
-            <span
-              style={{
-                fontSize: "10px",
-                fontWeight: "bold",
-                lineHeight: "0",
-                position: "relative",
-                top: "-10px",
-              }}
-            >
-              {myPost.dateCreated.split("T")[0]}
-            </span>
-          </div>
+            to={`/userposts/${myPost.author._id}`}
+            style={{
+              cursor: "pointer",
+              textDecoration: "none",
+              cursor: "pointer",
+            }}
+          >
+            <div className="public-code-wrapper">
+              <i
+                className="fa-solid fa-user fa-xl"
+                style={{ marginTop: "15px", color: "rgb(46 0 255)" }}
+              >
+                {" "}
+              </i>
+              <span
+                style={{ display: "block", fontSize: "12px", marginTop: "2px" }}
+              >
+                {myPost.author.name}
+              </span>
+              <span
+                style={{
+                  fontSize: "10px",
+                  fontWeight: "bold",
+                  lineHeight: "0",
+                  position: "relative",
+                  top: "-10px",
+                }}
+              >
+                {myPost.dateCreated.split("T")[0]}
+              </span>
+            </div>
           </Link>
 
-
-          <div style={{ height: '24px',alignItems: 'center',display: 'flex'}}>
+          <div
+            style={{ height: "24px", alignItems: "center", display: "flex" }}
+          >
             <button
               type="button"
               onClick={handleCopy}
@@ -62,36 +68,39 @@ console.log(myPost)
                   : "fa-xl fas fa-heart-broken srtik"
               }
               style={{ marginRight: "3px", cursor: "pointer", color: "red" }}
-              onClick={() => handleLike(myPost._id,myPost.author._id)}
+              onClick={() => handleLike(myPost._id, myPost.author._id)}
+            ></i>
+            <span
+              style={{ color: "black", fontSize: "24px", marginRight: "15px" }}
             >
-              
-            </i>
-            <span style={{ color: "black", fontSize: "24px", marginRight: '15px'}}>
-                {" " + myPost.likes.users.length}
+              {" " + myPost.likes.users.length}
             </span>
             <i
               className="fa-regular fa-comment fa-xl"
               style={{ marginRight: "3px" }}
+            ></i>
+            <span
+              style={{ color: "black", fontSize: "24px", marginRight: "8px" }}
             >
-              
-            </i>
-            <span style={{ color: "black", fontSize: "24px", marginRight: '8px'}}>
-            {" " + myPost.comments.length}
+              {" " + myPost.comments.length}
             </span>
           </div>
         </div>
         <Link
-          to={`./post/${myPost._id}`}
-          style={{ cursor: "pointer", textDecoration: "none",cursor: "pointer", }}
+          to={`/allposts/post/${myPost._id}`}
+          style={{
+            cursor: "pointer",
+            textDecoration: "none",
+            cursor: "pointer",
+          }}
         >
           <CodeEditor
-          className="code-editor"
+            className="code-editor"
             value={myPost.code}
             language="js"
             placeholder="Please enter JS code."
             padding={15}
             disabled
-
           />
         </Link>
         <div
