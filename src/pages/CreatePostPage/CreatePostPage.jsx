@@ -83,7 +83,6 @@ export default function CreatePostPage() {
                 "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
             }}
           />
-
           <Button variant="primary" type="submit" size="lg" style={{marginTop:'15px'}}>
             Save
           </Button>

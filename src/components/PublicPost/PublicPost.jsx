@@ -4,12 +4,10 @@ import { Link } from "react-router-dom";
 import "./PublicPost.css";
 
 export default function Post({ myPost, handleLike, user }) {
-  console.log(myPost);
-
   const handleCopy = (e) => {
     navigator.clipboard.writeText(myPost.code);
   };
-  console.log(myPost);
+
   return (
     <>
       <div style={{ width: "60%" }}>

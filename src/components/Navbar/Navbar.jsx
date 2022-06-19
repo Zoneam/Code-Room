@@ -1,9 +1,9 @@
-import { Nav, Navbar } from "react-bootstrap";
+import { Nav, Navbar as TopNav } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import { logOut } from "../../utilities/users-service";
 import { Link } from "react-router-dom";
 
-function Navibar({ user, setUser }) {
+function Navbar({ user, setUser }) {
   function handleLogOut() {
     logOut();
     setUser(null);
@@ -11,11 +11,11 @@ function Navibar({ user, setUser }) {
 
   return (
     <>
-      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+      <TopNav collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Container>
-          <Navbar.Brand href="#home">Code Room</Navbar.Brand>
-          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-          <Navbar.Collapse id="responsive-navbar-nav">
+          <TopNav.Brand href="#home">Code Room</TopNav.Brand>
+          <TopNav.Toggle aria-controls="responsive-navbar-nav" />
+          <TopNav.Collapse id="responsive-navbar-nav">
             {user ? (
               <>
                 <Nav className="me-auto">
@@ -36,11 +36,11 @@ function Navibar({ user, setUser }) {
                 </Nav>
               </>
             )}
-          </Navbar.Collapse>
+          </TopNav.Collapse>
         </Container>
-      </Navbar>
+      </TopNav>
     </>
   );
 }
 
-export default Navibar;
+export default Navbar;
