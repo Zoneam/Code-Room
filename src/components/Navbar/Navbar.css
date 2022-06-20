@@ -1,0 +1,92 @@
+.animate-flicker-slash {
+  -webkit-animation: slash-flicker 1.5s infinite;
+  -moz-animation: slash-flicker 0.5s infinite;
+  -o-animation: slash-flicker 0.5s infinite;
+  animation: slash-flicker 2s infinite;
+  animation: slash-flicker 2s linear infinite;
+  text-shadow: 0px 0px 9px #24a9ff;
+  margin: 0 5px 0 5px;
+}
+.animate-flicker-left {
+  -webkit-animation: curly 1.5s infinite;
+  -moz-animation: curly 0.5s infinite;
+  -o-animation: curly 0.5s infinite;
+  text-shadow: 0px 0px 9px #24a9ff;
+  animation: curly 5s infinite;
+}
+
+.animate-flicker-right {
+  -webkit-animation: curly 1.5s infinite;
+  -moz-animation: curly 0.5s infinite;
+  -o-animation: curly 0.5s infinite;
+  text-shadow: 0px 0px 9px #24a9ff;
+  animation: curly 3s infinite;
+}
+
+.topnav-brand {
+  color: aqua !important;
+  font-weight: 900;
+  font-size: 34px !important;
+  text-shadow: 0px 0px 9px #24a9ff;
+}
+
+#offset {
+  animation: slash-flicker 1s linear infinite;
+}
+
+@keyframes slash-flicker {
+  0% {
+    opacity: 0.1;
+  }
+  2% {
+    opacity: 0.1;
+  }
+  4% {
+    opacity: 1;
+  }
+
+  19% {
+    opacity: 1;
+  }
+  21% {
+    opacity: 0.1;
+  }
+  23% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 1;
+  }
+  83% {
+    opacity: 0.4;
+  }
+  87% {
+    opacity: 1;
+  }
+}
+
+@keyframes curly {
+  0% {
+    opacity: 0.1;
+  }
+  2% {
+    opacity: 1;
+  }
+  4% {
+    opacity: 0.1;
+  }
+
+  8% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 1;
+  }
+}

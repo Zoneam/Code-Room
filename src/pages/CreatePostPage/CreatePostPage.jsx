@@ -44,7 +44,7 @@ export default function CreatePostPage() {
               maxLength="65"
               name="title"
               onChange={handleChange}
-              style={{backgroundColor: 'antiquewhite'}}
+              style={{backgroundColor: '#d7eefa'}}
             />
           </InputGroup>
           <FloatingLabel
@@ -59,7 +59,7 @@ export default function CreatePostPage() {
               name="description"
               required
               onChange={handleChange}
-              style={{height:'100px', backgroundColor: 'antiquewhite', cursor:'initial'}}
+              style={{height:'100px', backgroundColor: '#d7eefa', cursor:'initial'}}
             />
           </FloatingLabel>
 
