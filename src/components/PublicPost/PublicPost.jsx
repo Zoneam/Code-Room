@@ -12,7 +12,8 @@ export default function Post({ myPost, handleLike, user }) {
     <>
       <div style={{ width: "60%" }}>
         <div className="public-outer-wrapper">
-          <Badge className="public-badge" bg="primary">
+
+          <Badge className="public-badge" bg="primary" style={{ boxShadow: 'rgb(25 25 25) 3px 2px 3px'}}>
             {myPost.title}
           </Badge>
           <Link
@@ -65,7 +66,7 @@ export default function Post({ myPost, handleLike, user }) {
                   ? "fa-xl fas fa-heart srtik"
                   : "fa-xl fas fa-heart-broken srtik"
               }
-              style={{ marginRight: "3px", cursor: "pointer", color: "red" }}
+              style={{ marginRight: "3px", cursor: "pointer", color: "red", textShadow: 'rgb(92 83 80 / 56%) 2px 2px 2px' }}
               onClick={() => handleLike(myPost._id, myPost.author._id)}
             ></i>
             <span
@@ -75,10 +76,10 @@ export default function Post({ myPost, handleLike, user }) {
             </span>
             <i
               className="fa-regular fa-comment fa-xl"
-              style={{ marginRight: "3px" }}
+              style={{ marginRight: "3px",textShadow: 'rgb(92 83 80 / 56%) 2px 2px 2px' }}
             ></i>
             <span
-              style={{ color: "black", fontSize: "24px", marginRight: "8px" }}
+              style={{ color: "black", fontSize: "24px", marginRight: "8px"}}
             >
               {" " + myPost.comments.length}
             </span>

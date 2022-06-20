@@ -1,5 +1,6 @@
 .lock {
   font-size: 22px;
+  text-shadow: rgb(92 83 80 / 56%) 2px 2px 2px;
   -webkit-transition: font-size 0.5s;
   -moz-transition: font-size 0.5s;
   -o-transition: font-size 0.5s;
@@ -29,6 +30,7 @@
   z-index: 15;
   left: 10px;
   top: 12px;
+  box-shadow: rgb(25 25 25) 3px 2px 3px;
   user-select: none;
 }
 
@@ -56,6 +58,8 @@
   right: 0.5rem;
   position: absolute;
   cursor: pointer;
+  text-shadow: rgb(25 25 25) 1px 0px 0px;
+
   color: rgb(199, 0, 0);
 }
 
