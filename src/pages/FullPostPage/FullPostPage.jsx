@@ -23,7 +23,6 @@ export default function CreatePostPage() {
 
   const handleAddComment = async (e) => {
     if (comment !== "") {
-      console.log(params.id)
       const post = await postsAPI.addComment(params.id, comment);
       setPost(post);
       setComment("");
