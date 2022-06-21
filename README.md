@@ -1,70 +1,68 @@
-# Getting Started with Create React App
+<div id="top"></div>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
 
-## Available Scripts
 
-In the project directory, you can run:
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a>
+    <img src="public/logo.png" alt="Logo" width="100" height="80">
+  </a>
+  <h1 align="center"> Code-Room </h1>
+  <p align="center">
+    <h3>An application to save and share code snippets and solutions</h3>
+    <h1><a href="https://mycode-room.herokuapp.com/">View Live App »</a></h1>
+    <h1><a href="http://184.169.210.244/">Vew Live App Deployed on AWS EC2 Instance</a></h1>
+    <a href="https://github.com/users/Zoneam/projects/1/views/1">Github Project Board</a>
+  </p>
+</div>
+   <br />
 
-### `npm start`
+   <p align="center"> <strong>ERD Diagram</strong> </p>
+   <br />
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+![ERD](public/ERD.jpg)
+<br />
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+   <p align="center"> <strong>Wireframe</strong> </p>
+   <br />
 
-### `npm test`
+![Wireframe](public/wireframe.png)
+<br />
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Technologies Used
 
-### `npm run build`
+- React
+- JavaScript
+- Express
+- JWT
+- React Bootstrap
+- MongoDb
+- Amazon Web Services EC2 Instance
+- PM2 (Process Manager for AWS)
+- Heroku
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Ice Box
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- [ ] About section users
+- [ ] Integrate quick search across public snippets
+- [ ] Add links code problem page
+- [ ] Login with github OAuth
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<p align="right">(<a href="#top">back to top</a>)</p>
 
-### `npm run eject`
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+[contributors-shield]: https://img.shields.io/github/contributors/zoneam/code-room.svg?style=for-the-badge
+[contributors-url]: https://github.com/zoneam/code-room/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/zoneam/code-room.svg?style=for-the-badge
+[forks-url]: https://github.com/zoneam/code-room/network/members
+[stars-shield]: https://img.shields.io/github/stars/zoneam/code-room.svg?style=for-the-badge
+[stars-url]: https://github.com/zoneam/code-room/stargazers
+[issues-shield]: https://img.shields.io/github/issues/zoneam/code-room.svg?style=for-the-badge
+[issues-url]: https://github.com/zoneam/code-room/issues
