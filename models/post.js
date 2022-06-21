@@ -7,7 +7,7 @@ const commentSchema = new Schema({
       type: String,
       required: true,
       minlength: 1,
-      maxlength: 200,
+      maxlength: 400,
     },
     author: {type: Schema.Types.ObjectId, ref: 'User'},
     username: {
@@ -20,8 +20,6 @@ const commentSchema = new Schema({
       get: (timestamp) => moment(timestamp).format('YYYY-MM-DD'),
     },
 });
-
-
 
 const postSchema = new Schema({
   title: {

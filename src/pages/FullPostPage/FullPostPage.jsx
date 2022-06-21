@@ -41,7 +41,6 @@ export default function CreatePostPage() {
   }, []);
 
 
-  console.log(post)
   return (
     <>
       <div style={{ width: "90%", margin: "50px auto" }}>
@@ -79,6 +78,8 @@ export default function CreatePostPage() {
             onChange={handleChange}
             placeholder="Comment"
             aria-label="Comment"
+            maxLength="400"
+            required
             style={{backgroundColor: "antiquewhite"}}
           />
           <Button
