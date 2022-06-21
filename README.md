@@ -16,7 +16,7 @@
   <p align="center">
     <h3>An application to save and share code snippets and solutions</h3>
     <h1><a href="https://mycode-room.herokuapp.com/">View Live App »</a></h1>
-    <h1><a href="http://184.169.210.244/">Vew Live App Deployed on AWS EC2 Instance</a></h1>
+    <h1><a href="http://184.169.210.244/myposts/">Vew Live App on AWS EC2 Instance</a></h1>
     <a href="https://github.com/users/Zoneam/projects/1/views/1">Github Project Board</a>
   </p>
 </div>
