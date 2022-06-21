@@ -101,7 +101,7 @@ export default function CreatePostPage() {
                   style={{ display: "flex", justifyContent: "space-between" }}
                 >
                   <span>Comment by {c.username}</span>{" "}
-                  <span>{c.dateCreated.split("T")[0]}</span>
+                  <span>{c.dateCreated.split("T")[0].replaceAll('-','/')}</span>
                 </div>
               </Card.Header>
               <Card.Body style={{backgroundColor: "antiquewhite"}}>

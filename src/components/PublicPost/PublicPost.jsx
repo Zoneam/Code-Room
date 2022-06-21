@@ -45,7 +45,7 @@ export default function Post({ myPost, handleLike, user }) {
                   top: "-10px",
                 }}
               >
-                {myPost.dateCreated.split("T")[0]}
+                {myPost.dateCreated.split("T")[0].replaceAll('-','/')}
               </span>
             </div>
           </Link>
