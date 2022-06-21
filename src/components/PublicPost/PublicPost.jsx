@@ -34,7 +34,7 @@ export default function Post({ myPost, handleLike, user }) {
               <span
                 style={{ display: "block", fontSize: "12px", marginTop: "2px" }}
               >
-                {myPost.author.name}
+                {myPost.author.name.length > 10 ? myPost.author.name.slice(7) + '...':myPost.author.name}
               </span>
               <span
                 style={{
