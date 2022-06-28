@@ -83,10 +83,15 @@ async function addUserLike(req, res) {
 
 // Get full post page
 async function getFullPost(req, res) {
-  const post = await Post.find({ _id: req.params.id });
-  console.log(post[0].comments)
-  post[0].comments = post[0].comments.reverse();
-  res.json(post);
+  const post = await Post.find({ _id: req.params.id })
+  .populate("author")
+  .exec(function (err, post) {
+    console.log(post);
+     post[0].comments = post[0].comments.reverse(); 
+     res.json(post);
+  })
+ 
+ 
 }
 
 // Add Comment

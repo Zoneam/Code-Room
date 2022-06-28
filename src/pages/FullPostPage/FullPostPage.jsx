@@ -40,12 +40,13 @@ export default function CreatePostPage() {
     getPost();
   }, []);
 
-
   return (
     <>
       <div style={{ width: "90%", margin: "50px auto" }}>
+        <p>By {post.author?.name}</p>
         <div className="full-post-page-header">
           <p style={{ marginLeft: "8px" }}>{post.description}</p>
+          
         </div>
 
         <div style={{ position: "relative" }}>
