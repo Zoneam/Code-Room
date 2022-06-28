@@ -30,6 +30,11 @@
   text-shadow: 0px 0px 9px #24a9ff;
 }
 
+.welcome-name {
+  color: white;
+   margin: 0;
+}
+
 #offset {
   animation: slash-flicker 1s linear infinite;
 }
@@ -88,5 +93,11 @@
   }
   100% {
     opacity: 1;
+  }
+}
+
+@media (max-width: 991px) {
+  .welcome-name {
+    display: none;
   }
 }

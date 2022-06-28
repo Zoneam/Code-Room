@@ -124,7 +124,6 @@ async function deletePost(req, res) {
     const posts = await Post.find({ author: req.user._id });
     res.json(posts);
   })
-
 }
 
 // Get all user posts
@@ -136,3 +135,4 @@ async function getUserPosts(req, res) {
     res.json(posts); 
   });
 }
+

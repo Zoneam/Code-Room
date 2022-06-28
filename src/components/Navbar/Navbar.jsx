@@ -45,7 +45,10 @@ function Navbar({ user, setUser }) {
                   <Link to={"/create"} style={{marginLeft: '15px', color: 'aqua'}}>Add Post</Link>
                 </Nav>
                 <Nav>
+                  <div>
                   <Link style={{ color: 'aqua'}} to={'./login'} onClick={handleLogOut}>LogOut</Link>
+                  <p className='welcome-name' >Welcome {user.name}</p>
+                  </div>
                 </Nav>
               </>
             ) : (
