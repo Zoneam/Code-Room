@@ -3,7 +3,8 @@ import * as postsAPI from "../../utilities/post-api";
 import PublicPost from "../../components/PublicPost/PublicPost";
 import Spinner from "react-bootstrap/Spinner";
 import Button from "react-bootstrap/Button";
-
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
+import Tooltip from 'react-bootstrap/Tooltip';
 export default function AllPostsPage({ user }) {
   const [allPosts, setAllPosts] = useState([]);
   const [isLoading, setLoading] = useState(true);

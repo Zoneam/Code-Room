@@ -46,8 +46,8 @@ function Navbar({ user, setUser }) {
                 </Nav>
                 <Nav>
                   <div>
-                  <Link style={{ color: 'aqua'}} to={'./login'} onClick={handleLogOut}>LogOut</Link>
                   <p className='welcome-name' >Welcome {user.name}</p>
+                  <Link style={{ color: 'aqua'}} to={'./login'} onClick={handleLogOut}>LogOut</Link>
                   </div>
                 </Nav>
               </>
