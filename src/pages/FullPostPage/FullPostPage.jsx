@@ -35,7 +35,7 @@ export default function CreatePostPage() {
   useEffect(function () {
     async function getPost() {
       const post = await postsAPI.getPost(params.id);
-      setPost(post[0]);
+      setPost(post);
     }
     getPost();
   }, []);

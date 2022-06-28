@@ -83,15 +83,13 @@ async function addUserLike(req, res) {
 
 // Get full post page
 async function getFullPost(req, res) {
-  const post = await Post.find({ _id: req.params.id })
+  await Post.findOne({ _id: req.params.id })
   .populate("author")
   .exec(function (err, post) {
     console.log(post);
-     post[0].comments = post[0].comments.reverse(); 
+     post.comments = post.comments.reverse(); 
      res.json(post);
   })
- 
- 
 }
 
 // Add Comment
@@ -100,15 +98,16 @@ async function addComment(req, res) {
     commentText:req.body.comment,
     author: req.user._id,
   }
-  User.findOne({ _id: req.user._id}, async function(err,foundUser) {
+User.findOne({ _id: req.user._id}, async function(err,foundUser) {
     comment.username = foundUser.name
-    Post.findOne({ _id: req.params.id }, async function(err,found){
-      found.comments.push(comment)
-      await found.save();
-      found.comments = found.comments.reverse();
-      res.json(found);
+    await Post.findOne({ _id: req.params.id })
+    .populate("author")
+    .exec( async function (err, foundPost) {
+      foundPost.comments.push(comment)
+      await foundPost.save();
+      foundPost.comments = foundPost.comments.reverse();
+      res.json(foundPost);
     })
-
   })
 }
 
