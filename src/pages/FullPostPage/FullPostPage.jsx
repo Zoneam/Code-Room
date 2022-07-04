@@ -29,6 +29,7 @@ export default function CreatePostPage() {
     }
   };
   const handleCopy = (e) => {
+    e.preventDefault();
     navigator.clipboard.writeText(post.code);
   };
 

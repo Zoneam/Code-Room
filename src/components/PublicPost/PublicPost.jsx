@@ -7,6 +7,7 @@ import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 export default function Post({ myPost, handleLike, user }) {
   const handleCopy = (e) => {
+    e.preventDefault();
     navigator.clipboard.writeText(myPost.code);
   };
 

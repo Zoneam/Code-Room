@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 
 export default function Post({ myPost, handleLock, handleDelete }) {
   const handleCopy = (e) => {
+    e.preventDefault();
     navigator.clipboard.writeText(myPost.code)
   };
   return (

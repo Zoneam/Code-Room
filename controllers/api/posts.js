@@ -86,7 +86,6 @@ async function getFullPost(req, res) {
   await Post.findOne({ _id: req.params.id })
   .populate("author")
   .exec(function (err, post) {
-    console.log(post);
      post.comments = post.comments.reverse(); 
      res.json(post);
   })
@@ -100,7 +99,7 @@ async function addComment(req, res) {
   }
 User.findOne({ _id: req.user._id}, async function(err,foundUser) {
     comment.username = foundUser.name
-    await Post.findOne({ _id: req.params.id })
+    Post.findOne({ _id: req.params.id })
     .populate("author")
     .exec( async function (err, foundPost) {
       foundPost.comments.push(comment)
@@ -139,4 +138,3 @@ async function getUserPosts(req, res) {
     res.json(posts); 
   });
 }
-
