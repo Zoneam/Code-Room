@@ -41,7 +41,7 @@ function Navbar({ user, setUser }) {
                 <Nav className="me-auto">
                   <Link to={"/allposts"} style={{marginLeft: '15px', color: 'aqua'}}>All Posts</Link>
                   <Link to={"/myposts"} style={{marginLeft: '15px',color: 'aqua'}}>My Posts</Link>
-                  {/* <Link to={"/favorites"} style={{marginLeft: '15px', color: 'aqua'}}>My Favorites</Link> */}
+                  <Link to={"/favorites"} style={{marginLeft: '15px', color: 'aqua'}}>My Favorites</Link>
                   <Link to={"/create"} style={{marginLeft: '15px', color: 'aqua'}}>Add Post</Link>
                 </Nav>
                 <Nav>
