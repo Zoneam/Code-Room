@@ -13,6 +13,7 @@ module.exports = {
   deletePost,
   getUserPosts,
   addUserLike,
+  getUserFavoritePosts,
 };
 
 // Get All Public Posts
@@ -135,6 +136,20 @@ async function getUserPosts(req, res) {
   .populate("author")
   .populate("likes")
   .exec(function (err, posts) {
+    res.json(posts); 
+  });
+}
+
+// Get all user favorite posts
+async function getUserFavoritePosts(req, res) {
+  await Post.find({})
+  .populate("likes")
+  .exec(function (err, posts) {
+    console.log(posts);
+    posts = posts.filter(()=>{
+      return posts.likes.users.includes(req.user._id)
+    })
+    console.log(posts);
     res.json(posts); 
   });
 }

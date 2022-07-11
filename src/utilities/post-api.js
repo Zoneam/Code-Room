@@ -50,3 +50,6 @@ export function addUserLike(postId, authorId) {
   return sendRequest(`${BASE_URL}/like/${authorId}/${postId}`, 'PUT');
 }
 
+export function getUserFavoritePosts(userId) {
+  return sendRequest(`${BASE_URL}/favorites/${userId}`);
+}
