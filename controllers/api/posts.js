@@ -14,6 +14,7 @@ module.exports = {
   getUserPosts,
   addUserLike,
   getUserFavoritePosts,
+  addUserFavoriteLike,
 };
 
 // Get All Public Posts
@@ -82,6 +83,29 @@ async function addUserLike(req, res) {
 })
 }
 
+//Add User Like  to favorite posts
+async function addUserFavoriteLike(req, res) {
+  Like.findOne({ post: req.params.postId }, async function(err,found){
+    if(!found.users.includes(req.user._id)){
+        found.users.push(req.user._id);
+       await found.save();
+    } else {
+        found.users.splice(found.users.indexOf(req.user._id),1)
+       await found.save();
+    }
+    Post.find({})
+  .populate("likes")
+  .populate("author")
+  .exec(function (err, posts) {
+    let favoritePosts = posts.filter((post)=>{
+      return post.likes.users.includes(req.user._id)
+    })
+    res.json(favoritePosts); 
+  });
+})
+}
+
+
 // Get full post page
 async function getFullPost(req, res) {
   await Post.findOne({ _id: req.params.id })
@@ -144,12 +168,12 @@ async function getUserPosts(req, res) {
 async function getUserFavoritePosts(req, res) {
   await Post.find({})
   .populate("likes")
+  .populate("author")
   .exec(function (err, posts) {
-    console.log(posts);
-    posts = posts.filter(()=>{
-      return posts.likes.users.includes(req.user._id)
+    let favoritePosts = posts.filter((post)=>{
+      return post.likes.users.includes(req.user._id)
     })
-    console.log(posts);
-    res.json(posts); 
+    console.log(favoritePosts);
+    res.json(favoritePosts); 
   });
 }

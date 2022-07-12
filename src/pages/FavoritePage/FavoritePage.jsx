@@ -14,32 +14,30 @@ export default function FavoritePage({ user }) {
   const [userFavoritePosts, setUserFavoritePosts] = useState([]);
 
   useEffect(function () {
-    console.log(user._id)
     async function getFavoritePosts() { 
       const userFavoritePosts = await postsAPI.getUserFavoritePosts(user._id);
       setUserFavoritePosts(userFavoritePosts.reverse());
       setLoading(false);
     }
     getFavoritePosts();
-  }, []);
+  }, [setUserFavoritePosts]);
 
-  // async function handleLike(postId, authorId) {
-  //   const userFavoritePosts = await postsAPI.addUserLike(postId, authorId);
-  //   setUserFavoritePosts(userFavoritePosts.reverse());
-  // }
+  async function handleLike(postId, authorId) {
+    const userFavoritePosts = await postsAPI.addUserFavoriteLike(postId, authorId);
+    setUserFavoritePosts(userFavoritePosts.reverse());
+  }
 
-  // const posts = userFavoritePosts.map((post, i) => {
-  //   return (
-  //     <div key={i} className="user-posts-page-wrapper">
-  //       <PublicPost myPost={post} key={i} handleLike={handleLike} user={user} />
-  //     </div>
-  //   );
-  // });
+  const posts = userFavoritePosts.map((post, i) => {
+    return (
+      <div key={i} className="user-posts-page-wrapper">
+        <PublicPost myPost={post} key={i} handleLike={handleLike} user={user} />
+      </div>
+    );
+  });
   return (
     <>
       {!isLoading ? (
-        // posts
-        'hhhhhh'
+        posts
       ) : (
         <Button variant="primary" disabled style={{ margin: "15%" }}>
           <Spinner
