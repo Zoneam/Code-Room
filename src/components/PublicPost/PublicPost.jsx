@@ -10,7 +10,7 @@ export default function Post({ myPost, handleLike, user }) {
     e.preventDefault();
     navigator.clipboard.writeText(myPost.code);
   };
-
+console.log("my post->>>",myPost)
   return (
     <>
       <div style={{ width: "60%" }}>
