@@ -1,5 +1,6 @@
 import { Component } from "react";
 import { signUp } from "../../utilities/users-service";
+import { toast } from 'react-toastify';
 
 export default class SignUpForm extends Component {
   state = {
@@ -10,6 +11,7 @@ export default class SignUpForm extends Component {
     error: "",
   };
 
+
   handleChange = (evt) => {
     // Unlike setSomeState in function components which
     // REPLACE the state with the arg, setState in class components
@@ -19,6 +21,8 @@ export default class SignUpForm extends Component {
       [evt.target.name]: evt.target.value,
     });
   };
+
+
 
   handleSubmit = async (evt) => {
     evt.preventDefault();
@@ -35,9 +39,11 @@ export default class SignUpForm extends Component {
       // Baby step
       this.props.setUser(user);
       this.props.navigate("/myposts");
+      toast.success(`Welcome ${user.name}`);
     } catch {
       // An error occurred
       this.setState({ error: "Sign Up Failed - Try Again" });
+      toast.error(`SignUp Failed Try Again!`);
     }
   };
 

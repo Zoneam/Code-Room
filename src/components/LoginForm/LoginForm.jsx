@@ -2,6 +2,7 @@ import { useState } from "react";
 import * as usersService from "../../utilities/users-service";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { toast } from 'react-toastify';
 
 export default function LoginForm({ setUser }) {
   const [credentials, setCredentials] = useState({
@@ -9,6 +10,9 @@ export default function LoginForm({ setUser }) {
     password: "",
   });
   const [error, setError] = useState("");
+  const loginSuccess = (user) => toast.success(`Welcome ${user}`);
+  const loginFailed = () => toast.error(`Log In Failed - Try Again`);
+
   const navigate = useNavigate();
   function handleChange(evt) {
     setCredentials({ ...credentials, [evt.target.name]: evt.target.value });
@@ -26,7 +30,9 @@ export default function LoginForm({ setUser }) {
       const user = await usersService.login(credentials);
       setUser(user);
       navigate("/myposts");
+      loginSuccess(user.name);
     } catch {
+      loginFailed();
       setError("Log In Failed - Try Again");
     }
   }
