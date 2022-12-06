@@ -52,7 +52,6 @@ export default function MyPostsPage() {
             size="sm"
             role="status"
             aria-hidden="true"
-            
           />
           Loading...
         </Button>

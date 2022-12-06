@@ -74,11 +74,11 @@ async function addUserLike(req, res) {
         found.users.splice(found.users.indexOf(req.user._id),1)
        await found.save();
     }
-    Post.find({author: req.params.userId})
+  Post.find({$and:[{ public: true }, {author: req.params.userId}]})
   .populate("likes")
   .populate("author")
-  .exec(function (err, posts) {
-    res.json(posts);
+  .exec(function (err, post) {
+    res.json(post);
   });
 })
 }
@@ -93,7 +93,7 @@ async function addUserFavoriteLike(req, res) {
         found.users.splice(found.users.indexOf(req.user._id),1)
        await found.save();
     }
-    Post.find({})
+  Post.find({})
   .populate("likes")
   .populate("author")
   .exec(function (err, posts) {
@@ -105,10 +105,9 @@ async function addUserFavoriteLike(req, res) {
 })
 }
 
-
 // Get full post page
 async function getFullPost(req, res) {
-  await Post.findOne({ _id: req.params.id })
+  Post.findOne({ _id: req.params.id })
   .populate("author")
   .exec(function (err, post) {
      post.comments = post.comments.reverse(); 
@@ -122,28 +121,27 @@ async function addComment(req, res) {
     commentText:req.body.comment,
     author: req.user._id,
   }
-User.findOne({ _id: req.user._id}, async function(err,foundUser) {
-    comment.username = foundUser.name
-    Post.findOne({ _id: req.params.id })
-    .populate("author")
-    .exec( async function (err, foundPost) {
-      foundPost.comments.push(comment)
-      await foundPost.save();
-      foundPost.comments = foundPost.comments.reverse();
-      res.json(foundPost);
+  User.findOne({ _id: req.user._id}, async function(err,foundUser) {
+      comment.username = foundUser.name
+      Post.findOne({ _id: req.params.id })
+      .populate("author")
+      .exec( async function (err, foundPost) {
+        foundPost.comments.push(comment)
+        await foundPost.save();
+        foundPost.comments = foundPost.comments.reverse();
+        res.json(foundPost);
+      })
     })
-  })
 }
 
 // Add Lock
 async function addLock(req, res) {
-    Post.findOne({_id: req.params.id }, async function(err,found){
-      found.public = !found.public
-      await found.save();
-      const posts = await Post.find({ author: req.user._id });
-      res.json(posts);
-    })
-
+  Post.findOne({_id: req.params.id }, async function(err,found){
+    found.public = !found.public
+    await found.save();
+    const posts = await Post.find({ author: req.user._id });
+    res.json(posts);
+  })
 }
 
 // Delete Post
@@ -156,7 +154,7 @@ async function deletePost(req, res) {
 
 // Get all user posts
 async function getUserPosts(req, res) {
-  await Post.find({$and:[{ public: true }, {author: req.params.id}]})
+   Post.find({$and:[{ public: true }, {author: req.params.id}]})
   .populate("author")
   .populate("likes")
   .exec(function (err, posts) {
@@ -166,14 +164,13 @@ async function getUserPosts(req, res) {
 
 // Get all user favorite posts
 async function getUserFavoritePosts(req, res) {
-  await Post.find({})
+  Post.find({})
   .populate("likes")
   .populate("author")
   .exec(function (err, posts) {
     let favoritePosts = posts.filter((post)=>{
       return post.likes.users.includes(req.user._id)
     })
-    console.log(favoritePosts);
     res.json(favoritePosts); 
   });
 }

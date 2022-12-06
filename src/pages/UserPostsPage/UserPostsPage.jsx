@@ -22,6 +22,7 @@ export default function UserPostsPage({ user }) {
 
   async function handleLike(postId, authorId) {
     const userPosts = await postsAPI.addUserLike(postId, authorId);
+    console.log(userPosts)
     setUserPosts(userPosts.reverse());
   }
 

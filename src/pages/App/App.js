@@ -25,9 +25,7 @@ function App() {
         <Route path="/login" element={user?<Navigate to="/myposts" />:<LoginForm setUser={setUser}/>}/>
         <Route path="/signup" element={<SignUpForm setUser={setUser} navigate={navigate}/>}/>
         <Route path="/myposts" element={user?<MyPostsPage/>:<LoginForm setUser={setUser}/>}/>
-
-        <Route path="/favorites/:userId" element={user?<FavoritePage user={user} />:<LoginForm setUser={setUser}/>}/>
-
+        <Route path="/favorites" element={user?<FavoritePage user={user} />:<LoginForm setUser={setUser}/>}/>
         <Route path="/allposts" element={user?<AllPostsPage user={user}/>:<LoginForm setUser={setUser}/>}/>
         <Route path="/allposts/post/:id" element={user?<FullPostPage/>:<LoginForm setUser={setUser}/>}/>
         <Route path="/create" element={user?<CreatePostPage/>:<LoginForm setUser={setUser}/>}/>
