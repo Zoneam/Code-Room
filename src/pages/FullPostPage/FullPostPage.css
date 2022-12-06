@@ -15,3 +15,12 @@
         top: 0.5rem;
         z-index: 15;
  }
+
+ .delete-comment {
+    top: -2px;
+    right: 0px;
+    position: absolute;
+    cursor: pointer;
+    text-shadow: rgb(25 25 25) 1px 0px 0px;
+    color: rgb(199, 0, 0);
+ }
