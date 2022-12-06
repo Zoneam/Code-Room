@@ -25,7 +25,7 @@ export default function UserPostsPage({ user }) {
     console.log(userPosts)
     setUserPosts(userPosts.reverse());
   }
-
+  
   const posts = userPosts.map((post, i) => {
     return (
       <div key={i} className="user-posts-page-wrapper">
@@ -33,10 +33,11 @@ export default function UserPostsPage({ user }) {
       </div>
     );
   });
+ 
   return (
     <>
       {!isLoading ? (
-        posts
+        posts ? posts : <h1>No Posts Yet</h1>
       ) : (
         <Button variant="primary" disabled style={{ margin: "15%" }}>
           <Spinner

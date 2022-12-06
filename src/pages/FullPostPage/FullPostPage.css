@@ -24,3 +24,13 @@
     text-shadow: rgb(25 25 25) 1px 0px 0px;
     color: rgb(199, 0, 0);
  }
+
+ @media screen and (max-width: 600px) {
+    .full-post-page-header {
+      min-width: 300px;
+    }
+    .wrapper{
+      width: 95%;
+    }
+  
+  }

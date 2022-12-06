@@ -5,6 +5,8 @@ import Spinner from "react-bootstrap/Spinner";
 import Button from "react-bootstrap/Button";
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Tooltip from 'react-bootstrap/Tooltip';
+import "./AllPostsPage.css";
+
 export default function AllPostsPage({ user }) {
   const [allPosts, setAllPosts] = useState([]);
   const [isLoading, setLoading] = useState(true);
@@ -25,7 +27,7 @@ export default function AllPostsPage({ user }) {
 
   const posts = allPosts.map((post, i) => {
     return (
-      <div
+      <div className="all-posts-page"
         key={i}
         style={{
           width: "100%",
@@ -41,7 +43,7 @@ export default function AllPostsPage({ user }) {
   return (
     <>
       {!isLoading ? (
-        posts
+        posts.length ? posts : <h1>No Posts Yet</h1>
       ) : (
         <Button variant="primary" disabled style={{ margin: "15%" }}>
           <Spinner

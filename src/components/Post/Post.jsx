@@ -11,7 +11,7 @@ export default function Post({ myPost, handleLock, handleDelete }) {
   };
   return (
     <>
-      <div style={{ width: "60%" }}>
+      <div style={{ width: "60%" }} className='wrapper'>
         <div className="post-wrapper">
           <Badge className="post-badge" bg="primary">
             {myPost.title}

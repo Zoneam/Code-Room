@@ -11,7 +11,7 @@ export default function Post({ myPost, handleLike, user }) {
   };
   return (
     <>
-      <div style={{ width: "60%" }}>
+      <div style={{ width: "60%" }} className='wrapper'>
         <div className="public-outer-wrapper">
           <Badge
             className="public-badge"
@@ -139,6 +139,7 @@ export default function Post({ myPost, handleLike, user }) {
             minWidth: "600px",
             padding: "7px",
           }}
+          className="wrapper"
         >
           <span style={{ marginLeft: "10px" }}>
             {myPost.description}{" "}

@@ -37,7 +37,7 @@ export default function FavoritePage({ user }) {
   return (
     <>
       {!isLoading ? (
-        posts
+        posts.length ? posts : <h1>No Favorites Yet</h1>
       ) : (
         <Button variant="primary" disabled style={{ margin: "15%" }}>
           <Spinner

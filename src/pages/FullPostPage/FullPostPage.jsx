@@ -92,7 +92,7 @@ export default function CreatePostPage({ user }) {
           </Button>
         </InputGroup>
       </div>
-      <div style={{ width: "60%", margin: "50px auto" }}>
+      <div style={{ width: "60%", margin: "50px auto" }} className='wrapper'>
         {post.comments.map((c, i) => {
           return (
             <Card key={i} style={{ margin: "50px auto" }}>

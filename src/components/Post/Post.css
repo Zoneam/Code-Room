@@ -75,3 +75,16 @@
   color: rgb(255, 0, 0);
   font-size: 25px;
 }
+
+@media screen and (max-width: 600px) {
+  .post-wrapper {
+    min-width: 300px;
+  }
+  .post-bottom-div {
+    min-width:300px;
+  }
+  .wrapper{
+    width: 95% !important;
+  }
+}
+  

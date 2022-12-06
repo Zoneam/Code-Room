@@ -85,3 +85,15 @@ textarea{
   font-size: 36px;
 }
 
+@media screen and (max-width: 600px) {
+  .public-outer-wrapper {
+    min-width: 300px;
+  }
+  .code-editor {
+    min-width: 300px;
+  }
+  .wrapper {
+    min-width:95% !important;
+  }
+
+}
