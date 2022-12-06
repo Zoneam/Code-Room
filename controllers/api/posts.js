@@ -137,16 +137,25 @@ async function addComment(req, res) {
 
 // Delete Comment
 async function deleteComment(req, res) {
-  console.log(req.params.commentId)
-  Post.findOne({ 'comments._id': req.params.commentId })
-  .populate("author")
-  .exec( async function (err, foundPost) {
-    console.log(foundPost)
-    foundPost.comments.splice(foundPost.comments.indexOf(foundPost.comments.find((comment)=>{return comment._id == req.params.commentId})),1)
-    await foundPost.save();
-    foundPost.comments = foundPost.comments.reverse();
-    res.json(foundPost);
-  })
+  const post = await Post.findOne({ 'comments._id': req.params.commentId , 'comments.author': req.user._id });
+  if (post) {
+    // Find the comment with the specified commentId and remove it from the comments array
+    const commentIndex = post.comments.findIndex(
+      (comment) => comment._id.toString() === req.params.commentId
+    );
+    if (commentIndex >= 0) {
+      post.comments.splice(commentIndex, 1);
+      await post.save();
+      post.comments = post.comments.reverse();
+      res.json(post);
+    } else {
+      // If the comment does not exist, return an error message
+      res.status(404).json({ error: 'Comment not found' });
+    }
+  } else {
+    // If the post does not exist or is not owned by the user, return an error message
+    res.status(401).json({ error: 'You are not authorized to delete this post' });
+  }
 }
 
 // Add Lock
@@ -171,6 +180,7 @@ async function deletePost(req, res) {
     res.status(401).json({ error: 'You are not authorized to delete this post' });
   }
 }
+
 
 // Get all user posts
 async function getUserPosts(req, res) {

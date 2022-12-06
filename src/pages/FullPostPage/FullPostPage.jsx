@@ -1,7 +1,6 @@
 import CodeEditor from "@uiw/react-textarea-code-editor";
-import { useState } from "react";
+import { useState,useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
@@ -10,22 +9,20 @@ import Card from "react-bootstrap/Card";
 import "./FullPostPage.css";
 
 export default function CreatePostPage({ user }) {
-  const [comment, setComment] = useState("");
   const [post, setPost] = useState({
     code: "",
     comments: [],
   });
   const params = useParams();
-
-  const handleChange = (e) => {
-    setComment(e.target.value);
-  };
+  const inputRef = useRef();
 
   const handleAddComment = async (e) => {
-    if (comment !== "") {
-      const post = await postsAPI.addComment(params.id, comment);
+    const inputValue = inputRef.current.value;
+    console.log(inputValue)
+    if (inputValue !== "") {
+      const post = await postsAPI.addComment(params.id, inputValue);
       setPost(post);
-      setComment("");
+      inputRef.current.value = "";
     }
   };
   const handleCopy = (e) => {
@@ -81,8 +78,7 @@ export default function CreatePostPage({ user }) {
         </div>
         <InputGroup className="mb-3" style={{ minWidth: "600px" }}>
           <Form.Control
-            value={comment}
-            onChange={handleChange}
+          ref={inputRef}
             placeholder="Comment"
             aria-label="Comment"
             maxLength="400"
