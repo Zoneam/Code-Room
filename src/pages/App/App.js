@@ -1,17 +1,17 @@
 import './App.css';
 import { useState } from 'react';
 import { Route, Routes } from "react-router";
-import CreatePostPage from '../CreatePostPage/CreatePostPage'
+import CreatePostPage from '../CreatePostPage/CreatePostPage.jsx'
 import { getUser } from '../../utilities/users-service';
-import Navbar from '../../components/Navbar/Navbar'
-import LoginForm from '../../components/LoginForm/LoginForm';
-import SignUpForm from '../../components/SignUpForm/SignUpForm';
-import MyPostsPage from '../MyPostsPage/MyPostsPage'
-import AllPostsPage from '../AllPostsPage/AllPostsPage'
-import FullPostPage from '../FullPostPage/FullPostPage'
+import Navbar from '../../components/Navbar/Navbar.jsx'
+import LoginForm from '../../components/LoginForm/LoginForm.jsx';
+import SignUpForm from '../../components/SignUpForm/SignUpForm.jsx';
+import MyPostsPage from '../MyPostsPage/MyPostsPage.jsx'
+import AllPostsPage from '../AllPostsPage/AllPostsPage.jsx'
+import FullPostPage from '../FullPostPage/FullPostPage.jsx'
 import { useNavigate, Navigate } from "react-router-dom";
-import UserPostsPage from '../UserPostsPage/UserPostsPage';
-import FavoritePage from '../FavoritePage/FavoritePage';
+import UserPostsPage from '../UserPostsPage/UserPostsPage.jsx';
+import FavoritePage from '../FavoritePage/FavoritePage.jsx';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 

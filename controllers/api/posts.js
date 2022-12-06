@@ -137,7 +137,8 @@ async function addComment(req, res) {
 
 // Delete Comment
 async function deleteComment(req, res) {
-  const post = await Post.findOne({ 'comments._id': req.params.commentId , 'comments.author': req.user._id });
+  const post = await Post.findOne({ 'comments._id': req.params.commentId , 'comments.author': req.user._id })
+  .populate("author")
   if (post) {
     // Find the comment with the specified commentId and remove it from the comments array
     const commentIndex = post.comments.findIndex(

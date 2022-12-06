@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import * as postsAPI from "../../utilities/post-api";
-import Post from "../../components/Post/Post";
+import Post from "../../components/Post/Post.jsx";
 import "./MyPostsPage.css";
 import Spinner from "react-bootstrap/Spinner";
 import Button from "react-bootstrap/Button";

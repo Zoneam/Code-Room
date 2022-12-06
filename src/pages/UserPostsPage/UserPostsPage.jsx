@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import * as postsAPI from "../../utilities/post-api";
-import PublicPost from "../../components/PublicPost/PublicPost";
+import PublicPost from "../../components/PublicPost/PublicPost.jsx";
 import { useParams } from "react-router-dom";
 import "./UserPostsPage.css";
 import Spinner from "react-bootstrap/Spinner";

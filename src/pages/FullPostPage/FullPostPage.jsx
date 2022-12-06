@@ -22,6 +22,7 @@ export default function CreatePostPage({ user }) {
     if (inputValue !== "") {
       const post = await postsAPI.addComment(params.id, inputValue);
       setPost(post);
+      console.log(post)
       inputRef.current.value = "";
     }
   };
@@ -30,9 +31,11 @@ export default function CreatePostPage({ user }) {
     navigator.clipboard.writeText(post.code);
   };
 
-  const handleDeleteComment = async (id) => {
+  const handleDeleteComment = async (e,id) => {
+    e.preventDefault();
     const post = await postsAPI.deleteComment(id);
     setPost(post);
+    console.log(post)
   }
 
   useEffect(function () {
@@ -99,7 +102,7 @@ export default function CreatePostPage({ user }) {
               <Card.Header>
             {user._id === c.author ? (
                 <span>
-                  <i onClick={() => handleDeleteComment(c._id)} className="fa-solid fa-rectangle-xmark fa-xl delete-comment"></i>
+                  <i onClick={(e) => handleDeleteComment(e,c._id)} className="fa-solid fa-rectangle-xmark fa-xl delete-comment"></i>
                 </span>
             ):''}
                 <div
