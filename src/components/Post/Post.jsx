@@ -9,6 +9,7 @@ export default function Post({ myPost, handleLock, handleDelete }) {
     e.preventDefault();
     navigator.clipboard.writeText(myPost.code)
   };
+  console.log(myPost)
   return (
     <>
       <div style={{ width: "60%" }} className='wrapper'>
@@ -27,7 +28,7 @@ export default function Post({ myPost, handleLock, handleDelete }) {
             />
           </span>
           <span>
-          <i onClick={(e)=>handleDelete(myPost._id)} className="fa-solid fa-rectangle-xmark fa-xl close-button"></i>
+          <i onClick={(e)=>handleDelete(myPost._id, myPost.title)} className="fa-solid fa-rectangle-xmark fa-xl close-button"></i>
           </span>
           </div>
           <div>

@@ -6,10 +6,13 @@ import Button from "react-bootstrap/Button";
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Tooltip from 'react-bootstrap/Tooltip';
 import "./AllPostsPage.css";
+import { toast } from 'react-toastify';
 
 export default function AllPostsPage({ user }) {
   const [allPosts, setAllPosts] = useState([]);
   const [isLoading, setLoading] = useState(true);
+  const likedSuccessfully = () => toast.success("Added to Favorites!",  {position: toast.POSITION.BOTTOM_RIGHT});
+  const dislikedSuccessfully = () => toast.error("Removed from Favorites!", {position: toast.POSITION.BOTTOM_RIGHT});
 
   useEffect(function () {
     async function getPosts() {
@@ -23,6 +26,12 @@ export default function AllPostsPage({ user }) {
   async function handleLike(postId) {
     const allPosts = await postsAPI.addLike(postId);
     setAllPosts(allPosts.reverse());
+    if (allPosts.find((post) => post._id === postId).likes.users.includes(user._id)){
+      console.log(allPosts)
+      likedSuccessfully();
+    } else {
+      dislikedSuccessfully();
+    }
   }
 
   const posts = allPosts.map((post, i) => {

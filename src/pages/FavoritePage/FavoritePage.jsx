@@ -5,13 +5,13 @@ import { useParams } from "react-router-dom";
 import "./FavoritePage.css";
 import Spinner from "react-bootstrap/Spinner";
 import Button from "react-bootstrap/Button";
-
+import { toast } from 'react-toastify';
 
 export default function FavoritePage({ user }) {
   const params = useParams();
   const [isLoading, setLoading] = useState(true);
-
   const [userFavoritePosts, setUserFavoritePosts] = useState([]);
+  const dislikedSuccessfully = () => toast.error("Removed from Favorites !",  {position: toast.POSITION.BOTTOM_RIGHT});
 
   useEffect(function () {
     async function getFavoritePosts() { 
@@ -25,6 +25,7 @@ export default function FavoritePage({ user }) {
   async function handleLike(postId, authorId) {
     const userFavoritePosts = await postsAPI.addUserFavoriteLike(postId, authorId);
     setUserFavoritePosts(userFavoritePosts.reverse());
+    dislikedSuccessfully();
   }
 
   const posts = userFavoritePosts.map((post, i) => {

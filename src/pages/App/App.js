@@ -12,6 +12,8 @@ import FullPostPage from '../FullPostPage/FullPostPage'
 import { useNavigate, Navigate } from "react-router-dom";
 import UserPostsPage from '../UserPostsPage/UserPostsPage';
 import FavoritePage from '../FavoritePage/FavoritePage';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const [user, setUser] = useState(getUser());
@@ -31,6 +33,7 @@ function App() {
         <Route path="/create" element={user?<CreatePostPage/>:<LoginForm setUser={setUser}/>}/>
         <Route path="/userposts/:id" element={user?<UserPostsPage user={user}/>:<LoginForm setUser={setUser}/>}/>
       </Routes>
+      <ToastContainer />
     </div>
   );
 }

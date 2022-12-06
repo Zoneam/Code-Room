@@ -4,10 +4,14 @@ import Post from "../../components/Post/Post";
 import "./MyPostsPage.css";
 import Spinner from "react-bootstrap/Spinner";
 import Button from "react-bootstrap/Button";
+import { toast } from 'react-toastify';
 
 export default function MyPostsPage() {
   const [myPosts, setMyPosts] = useState([]);
   const [isLoading, setLoading] = useState(true);
+  const deletedSuccessfully = (title) => toast.success(`${title} deleted successfully!`,  {position: toast.POSITION.BOTTOM_RIGHT});
+  const lockedSuccessfully = () => toast.success("You Made this Post Private!",  {position: toast.POSITION.BOTTOM_RIGHT});
+  const unlockedSuccessfully = () => toast.success("You Made this Post Public!",  {position: toast.POSITION.BOTTOM_RIGHT});
 
   useEffect(function () {
     async function getPosts() {
@@ -21,11 +25,19 @@ export default function MyPostsPage() {
   const handleLock = async (id) => {
     const posts = await postsAPI.addLock(id);
     setMyPosts(posts.reverse());
+    console.log(posts)
+    if (posts.find((post) => post._id === id).public === true){
+      console.log(posts)
+      unlockedSuccessfully();
+    } else {
+      lockedSuccessfully();
+    }
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id, title) => {
     const posts = await postsAPI.deletePost(id);
     setMyPosts(posts.reverse());
+    deletedSuccessfully(title);
   };
 
   const posts = myPosts.map((myPost, i) => {

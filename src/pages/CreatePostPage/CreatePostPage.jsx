@@ -6,8 +6,11 @@ import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 import * as postAPI from "../../utilities/post-api";
+import { toast } from 'react-toastify';
 
 export default function CreatePostPage() {
+  const createdSuccessfully = () => toast.success("Your Posting Created Successfully!",  {position: toast.POSITION.BOTTOM_RIGHT});
+
   const [post, setPost] = useState({
     code: "",
     title: "",
@@ -27,6 +30,7 @@ export default function CreatePostPage() {
   const handleSave = async (e) => {
     e.preventDefault();
     await postAPI.createNewPost(post);
+    createdSuccessfully();
     navigate("/myposts");
   };
 
