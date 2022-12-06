@@ -31,8 +31,8 @@ export function addComment(id, comment) {
   return sendRequest(`${BASE_URL}/post/${id}`, 'POST', { comment });
 }
 
-export function deleteComment(postId, commentId) {  
-  return sendRequest(`${BASE_URL}/post/${postId}/${commentId}`, 'DELETE');
+export function deleteComment(commentId) {  
+  return sendRequest(`${BASE_URL}/post/${commentId}`, 'DELETE');
 }
 
 export function addLock(id) {

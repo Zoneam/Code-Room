@@ -17,5 +17,6 @@ router.get('/userposts/:id', ensureLoggedIn,  postsCtrl.getUserPosts);
 router.get('/favorites/:userId', ensureLoggedIn,  postsCtrl.getUserFavoritePosts);
 router.put('/like/:userId/:postId',ensureLoggedIn,  postsCtrl.addUserLike);
 router.put('/favorites/:userId/:postId',ensureLoggedIn,  postsCtrl.addUserFavoriteLike);
+router.delete('/post/:commentId',ensureLoggedIn,  postsCtrl.deleteComment);
 
 module.exports = router;

@@ -15,6 +15,7 @@ module.exports = {
   addUserLike,
   getUserFavoritePosts,
   addUserFavoriteLike,
+  deleteComment,
 };
 
 // Get All Public Posts
@@ -132,6 +133,20 @@ async function addComment(req, res) {
         res.json(foundPost);
       })
     })
+}
+
+// Delete Comment
+async function deleteComment(req, res) {
+  console.log(req.params.commentId)
+  Post.findOne({ 'comments._id': req.params.commentId })
+  .populate("author")
+  .exec( async function (err, foundPost) {
+    console.log(foundPost)
+    foundPost.comments.splice(foundPost.comments.indexOf(foundPost.comments.find((comment)=>{return comment._id == req.params.commentId})),1)
+    await foundPost.save();
+    foundPost.comments = foundPost.comments.reverse();
+    res.json(foundPost);
+  })
 }
 
 // Add Lock

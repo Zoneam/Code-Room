@@ -9,7 +9,7 @@ import * as postsAPI from "../../utilities/post-api";
 import Card from "react-bootstrap/Card";
 import "./FullPostPage.css";
 
-export default function CreatePostPage() {
+export default function CreatePostPage({ user }) {
   const [comment, setComment] = useState("");
   const [post, setPost] = useState({
     code: "",
@@ -32,6 +32,11 @@ export default function CreatePostPage() {
     e.preventDefault();
     navigator.clipboard.writeText(post.code);
   };
+
+  const handleDeleteComment = async (id) => {
+    const post = await postsAPI.deleteComment(id);
+    setPost(post);
+  }
 
   useEffect(function () {
     async function getPost() {
@@ -96,9 +101,15 @@ export default function CreatePostPage() {
       </div>
       <div style={{ width: "60%", margin: "50px auto" }}>
         {post.comments.map((c, i) => {
+          console.log(c)
           return (
             <Card key={i} style={{ margin: "50px auto" }}>
               <Card.Header>
+            {user._id === c.author ? (
+                <span>
+                  <i onClick={() => handleDeleteComment(c._id)} className="fa-solid fa-rectangle-xmark fa-xl close-button"></i>
+                </span>
+            ):''}
                 <div
                   style={{ display: "flex", justifyContent: "space-between" }}
                 >
