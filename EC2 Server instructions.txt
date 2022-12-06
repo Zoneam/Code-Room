@@ -1,0 +1,118 @@
+        # Don't use them in a production server!
+        #
+        # include snippets/snakeoil.conf;
+        root /var/www/html;
+        # Add index.php to the list if you are using PHP
+        index index.html index.htm index.nginx-debian.html;
+        server_name _;
+        location / {
+                # First attempt to serve request as file, then
+                # as directory, then fall back to displaying a 404.
+                try_files $uri $uri/ =404;
+        }
+        location /api {
+                proxy_pass http://localhost:3001/api;
+                proxy_buffering off;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-Host $host;
+                proxy_set_header X-Forwarded-Port $server_port;
+        }
+        # pass PHP scripts to FastCGI server
+        #
+        #location ~ \.php$ {
+        #       include snippets/fastcgi-php.conf;
+        #
+        #       # With php-fpm (or other unix sockets):
+        #       fastcgi_pass unix:/run/php/php7.4-fpm.sock;
+        #       # With php-cgi (or other tcp sockets):
+        #       fastcgi_pass 127.0.0.1:9000;
+        #}
+        # deny access to .htaccess files, if Apache's document root
+        # concurs with nginx's one
+        #
+        #location ~ /\.ht {
+        #       deny all;
+        #}
+}
+# Virtual Host configuration for example.com
+#
+# You can move that to a different file under sites-available/ and symlink that
+# to sites-enabled/ to enable it.
+#
+#server {
+#       listen 80;
+#       listen [::]:80;
+#
+#       server_name example.com;
+#
+#       root /var/www/example.com;
+#       index index.html;
+#
+#       location / {
+#               try_files $uri $uri/ =404;
+#       }
+#}
+
+
+--------------------------------------
+--------------------------------------
+/etc/nginx/sites-enabled
+code-room.space  default
+
+code-room.space content as follows ------>>>
+
+server {
+
+        root /var/www/code-room.space/html;
+        index index.html index.htm index.nginx-debian.html;
+
+        server_name code-room.space www.code-room.space;
+
+        location / {
+                try_files $uri $uri/ =404;
+        }
+        location /api {
+                proxy_pass http://localhost:3001/api;
+                proxy_buffering off;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-Host $host;
+                proxy_set_header X-Forwarded-Port $server_port;
+        }
+    listen [::]:443 ssl ipv6only=on; # managed by Certbot
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/code-room.space/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/code-room.space/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+
+}
+server {
+    if ($host = www.code-room.space) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = code-room.space) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+        listen 80;
+        listen [::]:80;
+
+        server_name code-room.space www.code-room.space;
+    return 404; # managed by Certbot
+
+}
+
+
+
+---------------------Commands to update and restart code-----------------------------
+--------------------------------------------------
+
+git pull
+npm run build
+scp -r ./build/* /var/www/code-room.space/html    /// moving build folder
+sudo nginx -s restart
+pm2 restart server.js
+pm2 monit

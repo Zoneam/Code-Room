@@ -146,10 +146,15 @@ async function addLock(req, res) {
 
 // Delete Post
 async function deletePost(req, res) {
-  Post.deleteOne({_id: req.params.id }, async function(err){
+  const post = await Post.findOne({ _id: req.params.id, author: req.user._id });
+  if (post) {
+    await Post.deleteOne({ _id: req.params.id });
     const posts = await Post.find({ author: req.user._id });
     res.json(posts);
-  })
+  } else {
+    // If the post does not exist or is not owned by the user, return an error message
+    res.status(401).json({ error: 'You are not authorized to delete this post' });
+  }
 }
 
 // Get all user posts

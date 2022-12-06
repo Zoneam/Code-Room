@@ -2,7 +2,6 @@ import CodeEditor from "@uiw/react-textarea-code-editor";
 import Badge from "react-bootstrap/Badge";
 import { Link } from "react-router-dom";
 import "./PublicPost.css";
-import Button from "react-bootstrap/Button";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 export default function Post({ myPost, handleLike, user }) {
