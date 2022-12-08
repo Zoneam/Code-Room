@@ -45,6 +45,7 @@ export default function CreatePostPage({ user }) {
     }
     getPost();
   }, []);
+console.log(post)
 
   return (
     <>

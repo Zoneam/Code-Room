@@ -13,6 +13,10 @@ const userSchema = new Schema({
     lowercase: true,
     required: true
   },
+  googleId: {
+    type: String,
+  },
+  avatar: String,
   password: {
     type: String,
     trim: true,

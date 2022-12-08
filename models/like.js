@@ -14,4 +14,9 @@ const likeSchema = new Schema({
   timestamps: true
 });
 
+likeSchema.virtual('likesCount')
+  .get(function() {
+    return this.users.length;
+  });
+
 module.exports = mongoose.model('Like', likeSchema);

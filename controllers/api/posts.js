@@ -110,7 +110,9 @@ async function addUserFavoriteLike(req, res) {
 async function getFullPost(req, res) {
   Post.findOne({ _id: req.params.id })
   .populate("author")
+  .populate("likes")
   .exec(function (err, post) {
+    console.log(post.likes.likesCount)
      post.comments = post.comments.reverse(); 
      res.json(post);
   })
