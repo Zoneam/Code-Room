@@ -16,7 +16,7 @@ const userSchema = new Schema({
   googleId: {
     type: String,
   },
-  avatar: String,
+  imageUrl: String,
   password: {
     type: String,
     trim: true,

@@ -16,21 +16,47 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { GoogleLogin } from '@leecheuk/react-google-login';
 import * as userApi from '../../utilities/users-api'
+import { signUp } from "../../utilities/users-service";
+import MyProfile from '../../components/MyProfile/MyProfile.jsx';
 
 function App() {
   const [user, setUser] = useState(getUser());
   const navigate = useNavigate();
-
+  const [gUser, setGuser] = useState({
+    name: '',
+    email: '',
+    googleId: '',
+    imageUrl: '',
+    password: ''
+  });
   const responseGoogle = (response) => {
-    console.log(response.ow);
-    
+    console.log("Login Google fail", response.ow);
   }
 
-  const loginGoogle = (response) => {
-    console.log(response);
-    setUser(response)
+  const loginGoogle = async (response) => {
+    setGuser({
+      name: response.profileObj.name,
+      email: response.profileObj.email,
+      googleId: response.googleId,
+      imageUrl: response.profileObj.imageUrl,
+      password: ''
+    })
+    navigate('/signup/google')
   }
 
+
+  const reset = (e) => {
+    e.preventDefault();
+    setUser(null);
+    setGuser({
+      name: '',
+      email: '',
+      googleId: '',
+      imageUrl: '',
+      password: ''
+    });
+  }
+console.log("guser", gUser)
   return (
     <div className="App">
       <Navbar user={user} setUser={setUser}/>
@@ -43,17 +69,19 @@ function App() {
         isSignedIn={true}
       />
       <Routes>
-        <Route path="/auth/google" element={user?<Navigate to="/myposts" />:<LoginForm setUser={setUser}/>}/>
-        <Route path="/" element={user?<Navigate to="/myposts" />:<LoginForm setUser={setUser}/>}/>
-        <Route path="/login" element={user?<Navigate to="/myposts" />:<LoginForm setUser={setUser}/>}/>
-        <Route path="/signup" element={<SignUpForm setUser={setUser} navigate={navigate}/>}/>
-        <Route path="/myposts" element={user?<MyPostsPage/>:<LoginForm setUser={setUser}/>}/>
-        <Route path="/favorites" element={user?<FavoritePage user={user} />:<LoginForm setUser={setUser}/>}/>
-        <Route path="/allposts" element={user?<AllPostsPage user={user}/>:<LoginForm setUser={setUser}/>}/>
-        <Route path="/allposts/post/:id" element={user?<FullPostPage user={user}/>:<LoginForm setUser={setUser}/>}/>
-        <Route path="/create" element={user?<CreatePostPage/>:<LoginForm setUser={setUser}/>}/>
-        <Route path="/userposts/:id" element={user?<UserPostsPage user={user}/>:<LoginForm setUser={setUser}/>}/>
+        <Route path="/signup/google" element={!gUser.googleId?null:<MyProfile to="/myposts" gUser={gUser} setGuser={setGuser}/>}/>
+        <Route path="/auth/google" element={user?<Navigate to="/myposts" />:null}/>
+        <Route path="/" element={user?<Navigate to="/myposts" />:null}/>
+        {/* <Route path="/login" element={user?<Navigate to="/myposts" />:null}/> */}
+        {/* <Route path="/signup" element={<SignUpForm setUser={setUser} navigate={navigate}/>}/> */}
+        <Route path="/myposts" element={user?<MyPostsPage/>:null}/> 
+        <Route path="/favorites" element={user?<FavoritePage user={user} />:null}/>
+        <Route path="/allposts" element={user?<AllPostsPage user={user}/>:null}/>
+        <Route path="/allposts/post/:id" element={user?<FullPostPage user={user}/>:null}/>
+        <Route path="/create" element={user?<CreatePostPage/>:null}/>
+        <Route path="/userposts/:id" element={user?<UserPostsPage user={user}/>:null}/>
       </Routes>
+      <button onClick={reset}>Logout</button>
       <ToastContainer />
     </div>
   );
