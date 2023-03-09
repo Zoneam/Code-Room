@@ -2,10 +2,13 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt');
 
-const SALT_ROUNDS = 6;  // 6 is a reasonable value
+const SALT_ROUNDS = 10;  // 10 is a reasonable value
 
 const userSchema = new Schema({
-  name: {type: String, required: true},
+  name: {
+    type: String,
+    required: true
+  },
   email: {
     type: String,
     unique: true,
@@ -21,7 +24,6 @@ const userSchema = new Schema({
     type: String,
     trim: true,
     minLength: 3,
-    required: true
   }
 }, {
   timestamps: true,
@@ -34,17 +36,32 @@ const userSchema = new Schema({
   }
 });
 
-userSchema.pre('save', function(next) {
+userSchema.pre('save', async function(next) {
   // Save the reference to the user doc
   const user = this;
   if (!user.isModified('password')) return next();
   // password has been changed - salt and hash it
-  bcrypt.hash(user.password, SALT_ROUNDS, function(err, hash) {
-    if (err) return next(err);
-    // Update the password property with the hash
-    user.password = hash;
-    return next();
-  });
+  try {
+    if (this.isModified('password')) {
+      const salt = await bcrypt.genSalt(SALT_ROUNDS);
+      const hashedPassword = await bcrypt.hash(this.password, salt);
+      this.password = hashedPassword;
+    }
+    next();
+  } catch (err) {
+    next(err);
+  }
 });
+
+// Compare the entered password with the stored hashed password
+userSchema.methods.comparePassword = async function (enteredPassword) {
+  try {
+    const isMatch = await bcrypt.compare(enteredPassword, this.password);
+    return isMatch;
+  } catch (err) {
+    return false;
+  }
+};
+
 
 module.exports = mongoose.model('User', userSchema);

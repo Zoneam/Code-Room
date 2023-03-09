@@ -38,12 +38,12 @@ app.use(function (req, res, next) {
 
 app.use(require('./config/checkToken'));
 
+app.use('/', require('./controllers/api/auth'));
 // Put API routes here, before the "catch all" route
 app.use('/api/users', require('./routes/api/users'));
 
 // Protect the api routes below from anonymous users
 const ensureLoggedIn = require('./config/ensureLoggedIn');
-app.use('/', require('./controllers/api/auth'));
 app.use('/api/posts',ensureLoggedIn, require('./routes/api/posts'));
 
 // The following "catch all" route (note the *) 

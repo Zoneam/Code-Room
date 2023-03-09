@@ -1,5 +1,6 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+const LocalStrategy = require('passport-local').Strategy;
 const User = require('../models/user');
 
 passport.use(
@@ -11,33 +12,57 @@ passport.use(
         callbackURL: process.env.GOOGLE_CALLBACK
       },
       // The verify callback function
-      function(accessToken, refreshToken, profile, cb) {
+      async function(accessToken, refreshToken, profile, cb) {
+        console.log(profile, "profile")
         // a user has logged in with OAuth...
-        User.findOne({ googleId: profile.id }).then(async function(user) {
-          if (user) return cb(null, user);
-          // We have a new user via OAuth!
-          try {
-            user = await User.create({
-              name: profile.displayName,
-              googleId: profile.id,
-              email: profile.emails[0].value,
-              avatar: profile.photos[0].value
-            });
-            return cb(null, user);
-          } catch (err) {
-            return cb(err);
+        try {
+          
+          const existingUser = await User.findOne({ googleId: profile.id });
+          if (existingUser) {
+            return done(null, existingUser);
           }
-        });
+          const user = new User({ googleId: profile.id });
+          await user.save();
+          done(null, user);
+        } catch (err) {
+          done(err, null);
+        }
       }
     )
   );
 
-passport.serializeUser(function(user, cb) {
-    cb(null, user._id);
+
+// Configure local authentication
+passport.use(new LocalStrategy({
+  usernameField: 'email',
+  passwordField: 'password'
+}, async (email, password, done) => {
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return done(null, false, { message: 'Incorrect email or password.' });
+    }
+    const isMatch = await user.comparePassword(password);
+    if (!isMatch) {
+      return done(null, false, { message: 'Incorrect email or password.' });
+    }
+    done(null, user);
+  } catch (err) {
+    done(err, null);
+  }
+}));
+
+
+passport.serializeUser((user, done) => {
+  done(null, user.id);
 });
 
-passport.deserializeUser(function(userId, cb) {
-    User.findById(userId).then(function(user) {
-      cb(null, user);
-    });
+
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await User.findById(id);
+    done(null, user);
+  } catch (err) {
+    done(err, null);
+  }
 });

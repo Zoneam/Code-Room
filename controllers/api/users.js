@@ -10,6 +10,7 @@ module.exports = {
 
 async function login(req, res) {
   try {
+    console.log("req.body", req.body)
     const user = await User.findOne({ email: req.body.email });
     if (!user) throw new Error();
     const match = await bcrypt.compare(req.body.password, user.password);
@@ -22,7 +23,7 @@ async function login(req, res) {
 
 async function create(req, res) {
   try {
-    console.log(req.body)
+    console.log(req.body, "req.body")
     // Add the user to the database
     const user = await User.create(req.body);
     // token will be a string

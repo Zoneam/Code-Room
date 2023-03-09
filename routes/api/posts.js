@@ -2,13 +2,13 @@ const express = require('express');
 const router = express.Router();
 const postsCtrl = require('../../controllers/api/posts');
 const ensureLoggedIn = require('../../config/ensureLoggedIn');
-
+const isLoggedIn = require('../../config/auth');
 
 // GET /api/users/check-token
 router.post('/create',ensureLoggedIn,  postsCtrl.createNewPost);
 router.put('/like/:postId',ensureLoggedIn,  postsCtrl.addLike);
-router.get('/myposts',ensureLoggedIn,  postsCtrl.getMyPosts);
-router.get('/allposts',ensureLoggedIn, postsCtrl.getAllPosts);
+router.get('/myposts',isLoggedIn,  postsCtrl.getMyPosts);
+router.get('/allposts', postsCtrl.getAllPosts);
 router.get('/allposts/post/:id',ensureLoggedIn, postsCtrl.getFullPost);
 router.post('/post/:id', ensureLoggedIn,  postsCtrl.addComment);
 router.put('/myposts/:id', ensureLoggedIn,  postsCtrl.addLock);
