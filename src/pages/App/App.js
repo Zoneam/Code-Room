@@ -13,6 +13,7 @@ import { useNavigate, Navigate } from "react-router-dom";
 import UserPostsPage from '../UserPostsPage/UserPostsPage.jsx';
 import FavoritePage from '../FavoritePage/FavoritePage.jsx';
 import { ToastContainer } from 'react-toastify';
+import { GoogleLogin } from '@leecheuk/react-google-login';
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
