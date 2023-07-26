@@ -11,9 +11,7 @@ module.exports = {
   addLock,
   deletePost,
   getUserPosts,
-  addUserLike,
   getUserFavoritePosts,
-  addUserFavoriteLike,
   deleteComment,
 };
 
@@ -42,81 +40,40 @@ async function getAllPosts(req, res) {
 async function createNewPost(req, res) {
   req.body.post.author = req.user._id;
   console.log("REQ.BODY.POST -----> ",req.body.post)
-  const post = new Post(req.body.post);
-  await post.save();
+  const post = Post.create(req.body.post)
+  console.log("POST ----->+++ ",post)
   res.json(post);
 }
 
 // Get all my posts
 async function getMyPosts(req, res) {
+  console.log("REQ.USER -----> ",req.user._id)
   const posts = await Post.find({ author: req.user._id });
+  console.log("POSTS -----> ",posts)
   res.json(posts);
 }
 
 // Add Like
 async function addLike(req, res) {
-  const post = await Post.findOne({ post: req.params.postId })
-  console.log("POST -----> ",post)
+  const post = await Post.findById(req.params.postId )
+  .populate("author")
+  console.log("POST -----> ", post)
     if(!post.likes.includes(req.user._id)){
       post.likes.push(req.user._id);
-       await post.save();
     } else {
       post.likes.splice(post.likes.indexOf(req.user._id),1)
-       await post.save();
     }
+    await post.save();
+    console.log("POST -----> ",post)
     res.json(post);
-
   }
-
-//Add User Like 
-async function addUserLike(req, res) {
-//   Like.findOne({ post: req.params.postId }, async function(err,found){
-//     if(!found.users.includes(req.user._id)){
-//         found.users.push(req.user._id);
-//        await found.save();
-//     } else {
-//         found.users.splice(found.users.indexOf(req.user._id),1)
-//        await found.save();
-//     }
-//   Post.find({$and:[{ public: true }, {author: req.params.userId}]})
-//   .populate("likes")
-//   .populate("author")
-//   .exec(function (err, post) {
-//     res.json(post);
-//   });
-// })
-}
-
-//Add User Like  to favorite posts
-async function addUserFavoriteLike(req, res) {
-  Like.findOne({ post: req.params.postId }, async function(err,found){
-    if(!found.users.includes(req.user._id)){
-        found.users.push(req.user._id);
-       await found.save();
-    } else {
-        found.users.splice(found.users.indexOf(req.user._id),1)
-       await found.save();
-    }
-  Post.find({})
-  .populate("likes")
-  .populate("author")
-  .exec(function (err, posts) {
-    let favoritePosts = posts.filter((post)=>{
-      return post.likes.users.includes(req.user._id)
-    })
-    res.json(favoritePosts); 
-  });
-})
-}
 
 // Get full post page
 async function getFullPost(req, res) {
-  Post.findOne({ _id: req.params.id })
+  const post = await Post.findById(req.params.id)
   .populate("author")
-  .exec(function (err, post) {
      post.comments = post.comments.reverse(); 
      res.json(post);
-  })
 }
 
 // Add Comment
@@ -198,6 +155,8 @@ async function getUserPosts(req, res) {
 
 // Get all user favorite posts
 async function getUserFavoritePosts(req, res) {
-  const posts = await Post.find({ 'likes.user': req.user._id })
+  const posts = await Post.find({ 'likes': req.user._id })
+  .populate("author")
+  console.log("POSTS -----> ",posts)
   res.json(posts); 
 }

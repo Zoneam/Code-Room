@@ -2,12 +2,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 var moment = require('moment');
 
-const likeSchema = new Schema({
-  users: Array,
-}, {
-  timestamps: true
-});
-
 const commentSchema = new Schema({
   commentText: {
       type: String,
@@ -52,9 +46,9 @@ const postSchema = new Schema({
     default: false,
     required: true,
   },
-  author: {type: Schema.Types.ObjectId, ref: 'User',},
+  author: {type: Schema.Types.ObjectId, ref: 'User', required: true},
   comments: [commentSchema],
-  likes: [likeSchema],
+  likes: Array,
   category: {
     type: String,
     enum: ['Coding', 'DataScience', 'UIUX', 'None'],

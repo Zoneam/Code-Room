@@ -24,7 +24,7 @@ export default function UserPostsPage({ user }) {
   }, []);
 
   async function handleLike(postId, authorId) {
-    const userPosts = await postsAPI.addUserLike(postId, authorId);
+    const userPosts = await postsAPI.addLike(postId, authorId);
     console.log(userPosts)
     setUserPosts(userPosts.reverse());
     if (userPosts.find((post) => post._id === postId).likes.users.includes(user._id)){
@@ -38,7 +38,7 @@ export default function UserPostsPage({ user }) {
   const posts = userPosts.map((post, i) => {
     return (
       <div key={i} className="user-posts-page-wrapper">
-        <PublicPost myPost={post} key={i} handleLike={handleLike} user={user} />
+        <PublicPost post={post} key={i} handleLike={handleLike} user={user} />
       </div>
     );
   });

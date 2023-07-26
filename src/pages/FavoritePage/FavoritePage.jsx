@@ -12,26 +12,36 @@ export default function FavoritePage({ user }) {
   const [isLoading, setLoading] = useState(true);
   const [userFavoritePosts, setUserFavoritePosts] = useState([]);
   const dislikedSuccessfully = () => toast.error("Removed from Favorites !",  {position: toast.POSITION.BOTTOM_RIGHT});
+  const likedSuccessfully = () => toast.success("Added to Favorites!",  {position: toast.POSITION.BOTTOM_RIGHT});
 
   useEffect(function () {
     async function getFavoritePosts() { 
-      const userFavoritePosts = await postsAPI.getUserFavoritePosts(user._id);
-      setUserFavoritePosts(userFavoritePosts.reverse());
+      const userFavPosts = await postsAPI.getUserFavoritePosts();
+      setUserFavoritePosts(userFavPosts.reverse());
+      console.log("userFavoritePosts", userFavPosts)
       setLoading(false);
     }
     getFavoritePosts();
   }, [setUserFavoritePosts]);
 
-  async function handleLike(postId, authorId) {
-    const userFavoritePosts = await postsAPI.addUserFavoriteLike(postId, authorId);
-    setUserFavoritePosts(userFavoritePosts.reverse());
-    dislikedSuccessfully();
+
+  async function handleLike(postId) {
+    const updatedPost = await postsAPI.addLike(postId);
+    console.log("handleLike",updatedPost)
+    setUserFavoritePosts((prevPosts) =>
+    prevPosts.filter((post) => (post._id !== updatedPost._id ))
+    );
+    if (updatedPost.likes.includes(user._id)){
+      likedSuccessfully();
+    } else {
+      dislikedSuccessfully();
+    }
   }
 
   const posts = userFavoritePosts.map((post, i) => {
     return (
       <div key={i} className="user-posts-page-wrapper">
-        <PublicPost myPost={post} key={i} handleLike={handleLike} user={user} />
+        <PublicPost post={post} key={i} handleLike={handleLike} user={user} />
       </div>
     );
   });

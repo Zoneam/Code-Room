@@ -55,7 +55,7 @@ export default function MyPostsPage() {
   return (
     <>
       {!isLoading ? (
-        posts.length ? posts : <h1>No Postings Yet</h1>
+        posts.length ? posts : <h1>No Posts Yet</h1>
       ) : (
         <Button variant="primary" disabled style={{margin:'15%'}}>
           <Spinner

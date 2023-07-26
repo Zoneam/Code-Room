@@ -27,11 +27,11 @@ export default function AllPostsPage({ user }) {
 
   async function handleLike(postId) {
     const updatedPost = await postsAPI.addLike(postId);
+    console.log("handleLike",updatedPost)
     setAllPosts((prevPosts) =>
     prevPosts.map((post) => (post._id === updatedPost._id ? updatedPost : post))
     );
-    console.log("handleLike",updatedPost)
-    if (updatedPost.likes.users.includes(user._id)){
+    if (updatedPost.likes.includes(user._id)){
       likedSuccessfully();
     } else {
       dislikedSuccessfully();
@@ -53,7 +53,7 @@ export default function AllPostsPage({ user }) {
           justifyContent: "center",
         }}
       >
-        <PublicPost myPost={post} key={i} handleLike={handleLike} user={user} />
+        <PublicPost post={post} key={i} handleLike={handleLike} user={user} />
       </div>
     );
   });

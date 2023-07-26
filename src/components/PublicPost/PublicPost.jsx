@@ -4,11 +4,12 @@ import { Link } from "react-router-dom";
 import "./PublicPost.css";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
-export default function Post({ myPost, handleLike, user }) {
+export default function Post({ post, handleLike, user }) {
   const handleCopy = (e) => {
     e.preventDefault();
-    navigator.clipboard.writeText(myPost.code);
+    navigator.clipboard.writeText(post.code);
   };
+  console.log("post", post);
   return (
     <>
       <div style={{ width: "60%" }} className='wrapper'>
@@ -18,10 +19,10 @@ export default function Post({ myPost, handleLike, user }) {
             bg="primary"
             style={{ boxShadow: "rgb(25 25 25) 3px 2px 3px" }}
           >
-            {myPost.title}
+            {post.title}
           </Badge>
           <Link
-            to={`/userposts/${myPost.author._id}`}
+            to={`/userposts/${post.author._id}`}
             style={{
               cursor: "pointer",
               textDecoration: "none",
@@ -31,7 +32,7 @@ export default function Post({ myPost, handleLike, user }) {
             <OverlayTrigger
               delay={{ hide: 250, show: 0 }}
               overlay={(props) => (
-                <Tooltip {...props}>{myPost.author.name}</Tooltip>
+                <Tooltip {...props}>{post.author.name}</Tooltip>
               )}
               placement="top"
             >
@@ -51,9 +52,9 @@ export default function Post({ myPost, handleLike, user }) {
                     marginTop: "2px",
                   }}
                 >
-                  {myPost.author.name.length > 10
-                    ? myPost.author.name.slice(0,7) + "..."
-                    : myPost.author.name}
+                  {post.author.name.length > 10
+                    ? post.author.name.slice(0,7) + "..."
+                    : post.author.name}
                 </span>
                 <span
                   style={{
@@ -64,7 +65,7 @@ export default function Post({ myPost, handleLike, user }) {
                     top: "-10px",
                   }}
                 >
-                  {myPost.dateCreated.split("T")[0].split('-').reverse().join('/')}
+                  {post.dateCreated.split("T")[0].split('-').reverse().join('/')}
                 </span>
               </div>
             </OverlayTrigger>
@@ -82,7 +83,7 @@ export default function Post({ myPost, handleLike, user }) {
             </button>
             <i
               className={
-                myPost.likes.includes(user._id)
+                post.likes.includes(user._id)
                   ? "fa-xl fas fa-heart srtik"
                   : "fa-xl fas fa-heart-broken srtik"
               }
@@ -92,12 +93,12 @@ export default function Post({ myPost, handleLike, user }) {
                 color: "red",
                 textShadow: "rgb(92 83 80 / 56%) 2px 2px 2px",
               }}
-              onClick={() => handleLike(myPost._id, myPost.author._id)}
+              onClick={() => handleLike(post._id)}
             ></i>
             <span
               style={{ color: "black", fontSize: "24px", marginRight: "15px" }}
             >
-              {" " + myPost.likes.length}
+              {" " + post.likes.length}
             </span>
             <i
               className="fa-regular fa-comment fa-xl"
@@ -109,12 +110,12 @@ export default function Post({ myPost, handleLike, user }) {
             <span
               style={{ color: "black", fontSize: "24px", marginRight: "8px" }}
             >
-              {" " + myPost.comments.length}
+              {" " + post.comments.length}
             </span>
           </div>
         </div>
         <Link
-          to={`/allposts/post/${myPost._id}`}
+          to={`/allposts/post/${post._id}`}
           style={{
             cursor: "pointer",
             textDecoration: "none",
@@ -123,7 +124,7 @@ export default function Post({ myPost, handleLike, user }) {
         >
           <CodeEditor
             className="code-editor"
-            value={myPost.code}
+            value={post.code}
             language="js"
             placeholder="Please enter JS code."
             padding={15}
@@ -142,7 +143,7 @@ export default function Post({ myPost, handleLike, user }) {
           className="wrapper"
         >
           <span style={{ marginLeft: "10px" }}>
-            {myPost.description}{" "}
+            {post.description}{" "}
             <span
               style={{
                 position: "relative",
