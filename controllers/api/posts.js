@@ -1,5 +1,4 @@
 const Post = require("../../models/post");
-const Like = require("../../models/like");
 const User = require("../../models/user");
 
 module.exports = {
@@ -19,24 +18,32 @@ module.exports = {
 };
 
 // Get All Public Posts
+// Get All Public Posts (Paginated)
 async function getAllPosts(req, res) {
-  Post.find({ public: true })
-  .populate("author")
-  .populate("likes")
-  .exec(function (err, posts) {
-    res.json(posts);
-  });
+  const page = parseInt(req.query.page) || 1; // default to page 1
+  const pageSize = 5; // number of posts per page
+  try {
+    const count = await Post.countDocuments({ public: true });
+    const totalPages = Math.ceil(count / pageSize);
+    const posts = await Post.find({ public: true })
+    .populate("author")
+    .sort({ createdAt: -1 })
+    .skip((page - 1) * pageSize)
+    .limit(pageSize)
+    console.log("PAGE -----> ",posts)
+    res.json({ posts, totalPages });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
 }
 
 // Create new post
 async function createNewPost(req, res) {
   req.body.post.author = req.user._id;
-  const newLike = new Like();
-  req.body.post.likes = newLike;
+  console.log("REQ.BODY.POST -----> ",req.body.post)
   const post = new Post(req.body.post);
-  newLike.post = post.id;
   await post.save();
-  await newLike.save();
   res.json(post);
 }
 
@@ -48,40 +55,36 @@ async function getMyPosts(req, res) {
 
 // Add Like
 async function addLike(req, res) {
-  Like.findOne({ post: req.params.postId }, async function(err,found){
-    if(!found.users.includes(req.user._id)){
-        found.users.push(req.user._id);
-       await found.save();
+  const post = await Post.findOne({ post: req.params.postId })
+  console.log("POST -----> ",post)
+    if(!post.likes.includes(req.user._id)){
+      post.likes.push(req.user._id);
+       await post.save();
     } else {
-        found.users.splice(found.users.indexOf(req.user._id),1)
-       await found.save();
+      post.likes.splice(post.likes.indexOf(req.user._id),1)
+       await post.save();
     }
-    Post.find({ public: true })
-  .populate("likes")
-  .populate("author")
-  .exec(function (err, posts) {
-    res.json(posts);
-  });
-})
-}
+    res.json(post);
+
+  }
 
 //Add User Like 
 async function addUserLike(req, res) {
-  Like.findOne({ post: req.params.postId }, async function(err,found){
-    if(!found.users.includes(req.user._id)){
-        found.users.push(req.user._id);
-       await found.save();
-    } else {
-        found.users.splice(found.users.indexOf(req.user._id),1)
-       await found.save();
-    }
-  Post.find({$and:[{ public: true }, {author: req.params.userId}]})
-  .populate("likes")
-  .populate("author")
-  .exec(function (err, post) {
-    res.json(post);
-  });
-})
+//   Like.findOne({ post: req.params.postId }, async function(err,found){
+//     if(!found.users.includes(req.user._id)){
+//         found.users.push(req.user._id);
+//        await found.save();
+//     } else {
+//         found.users.splice(found.users.indexOf(req.user._id),1)
+//        await found.save();
+//     }
+//   Post.find({$and:[{ public: true }, {author: req.params.userId}]})
+//   .populate("likes")
+//   .populate("author")
+//   .exec(function (err, post) {
+//     res.json(post);
+//   });
+// })
 }
 
 //Add User Like  to favorite posts
@@ -195,13 +198,6 @@ async function getUserPosts(req, res) {
 
 // Get all user favorite posts
 async function getUserFavoritePosts(req, res) {
-  Post.find({})
-  .populate("likes")
-  .populate("author")
-  .exec(function (err, posts) {
-    let favoritePosts = posts.filter((post)=>{
-      return post.likes.users.includes(req.user._id)
-    })
-    res.json(favoritePosts); 
-  });
+  const posts = await Post.find({ 'likes.user': req.user._id })
+  res.json(posts); 
 }

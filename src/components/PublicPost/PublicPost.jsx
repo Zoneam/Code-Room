@@ -82,7 +82,7 @@ export default function Post({ myPost, handleLike, user }) {
             </button>
             <i
               className={
-                myPost.likes.users.includes(user._id)
+                myPost.likes.includes(user._id)
                   ? "fa-xl fas fa-heart srtik"
                   : "fa-xl fas fa-heart-broken srtik"
               }
@@ -97,7 +97,7 @@ export default function Post({ myPost, handleLike, user }) {
             <span
               style={{ color: "black", fontSize: "24px", marginRight: "15px" }}
             >
-              {" " + myPost.likes.users.length}
+              {" " + myPost.likes.length}
             </span>
             <i
               className="fa-regular fa-comment fa-xl"
