@@ -1,17 +1,27 @@
 import CodeEditor from "@uiw/react-textarea-code-editor";
-import Badge from "react-bootstrap/Badge";
 import { Link } from "react-router-dom";
 import "./PublicPost.css";
-import OverlayTrigger from "react-bootstrap/OverlayTrigger";
-import Tooltip from "react-bootstrap/Tooltip";
+import { OverlayTrigger, Tooltip, Badge } from "react-bootstrap";
+
 export default function Post({ post, handleLike, user }) {
   const handleCopy = (e) => {
     e.preventDefault();
     navigator.clipboard.writeText(post.code);
   };
-  console.log("post", post);
+  const authorName = post.author.name.length > 10 ? post.author.name.slice(0, 7) + "..." : post.author.name;
+  const dateCreated = post.dateCreated.split("T")[0].split('-').reverse().join('/');
+  const likeIconClass = post.likes.includes(user._id) ? "fa-xl fas fa-heart srtik" : "fa-xl fas fa-heart-broken srtik";
+console.log("POST",post)
   return (
     <>
+          <div className="all-posts-page"
+        style={{
+          width: "100%",
+          margin: "50px auto",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
       <div style={{ width: "60%" }} className='wrapper'>
         <div className="public-outer-wrapper">
           <Badge
@@ -52,9 +62,7 @@ export default function Post({ post, handleLike, user }) {
                     marginTop: "2px",
                   }}
                 >
-                  {post.author.name.length > 10
-                    ? post.author.name.slice(0,7) + "..."
-                    : post.author.name}
+                  {authorName}
                 </span>
                 <span
                   style={{
@@ -65,7 +73,7 @@ export default function Post({ post, handleLike, user }) {
                     top: "-10px",
                   }}
                 >
-                  {post.dateCreated.split("T")[0].split('-').reverse().join('/')}
+                  {dateCreated}
                 </span>
               </div>
             </OverlayTrigger>
@@ -82,11 +90,7 @@ export default function Post({ post, handleLike, user }) {
               Copy
             </button>
             <i
-              className={
-                post.likes.includes(user._id)
-                  ? "fa-xl fas fa-heart srtik"
-                  : "fa-xl fas fa-heart-broken srtik"
-              }
+              className={likeIconClass}
               style={{
                 marginRight: "3px",
                 cursor: "pointer",
@@ -153,6 +157,7 @@ export default function Post({ post, handleLike, user }) {
             ></span>
           </span>
         </div>
+      </div>
       </div>
     </>
   );

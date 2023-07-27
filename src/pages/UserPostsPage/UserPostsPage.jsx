@@ -35,13 +35,7 @@ export default function UserPostsPage({ user }) {
     }
   }
 
-  const posts = userPosts.map((post, i) => {
-    return (
-      <div key={i} className="user-posts-page-wrapper">
-        <PublicPost post={post} key={i} handleLike={handleLike} user={user} />
-      </div>
-    );
-  });
+  const posts = userPosts.map((post, i) => <PublicPost post={post} key={i} handleLike={handleLike} user={user} />);
  
   return (
     <>

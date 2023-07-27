@@ -48,14 +48,6 @@ export function getUserPosts(postId) {
   return sendRequest(`${BASE_URL}/userposts/${postId}`);
 }
 
-// export function addUserLike(postId, authorId) {
-//   return sendRequest(`${BASE_URL}/like/${postId}`, 'PUT');
-// }
-
 export function getUserFavoritePosts() {
   return sendRequest(`${BASE_URL}/favorites`);
 }
-
-// export function addUserFavoriteLike(postId) {
-//   return sendRequest(`${BASE_URL}/favorites/${postId}`, 'PUT');
-// }

@@ -25,9 +25,7 @@ export default function MyPostsPage() {
   const handleLock = async (id) => {
     const posts = await postsAPI.addLock(id);
     setMyPosts(posts.reverse());
-    console.log(posts)
     if (posts.find((post) => post._id === id).public === true){
-      console.log(posts)
       unlockedSuccessfully();
     } else {
       lockedSuccessfully();
@@ -40,18 +38,8 @@ export default function MyPostsPage() {
     deletedSuccessfully(title);
   };
 
-  const posts = myPosts.map((myPost, i) => {
-    return (
-      <div className="my-posts-psge-wrapper" key={i}>
-        <Post
-          myPost={myPost}
-          key={i}
-          handleLock={handleLock}
-          handleDelete={handleDelete}
-        />
-      </div>
-    );
-  });
+  const posts = myPosts.map(myPost => <Post post={myPost} key={myPost._id} handleLock={handleLock} handleDelete={handleDelete}/>);
+  
   return (
     <>
       {!isLoading ? (

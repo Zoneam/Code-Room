@@ -1,3 +1,10 @@
+.pagination{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
 @media screen and (max-width: 600px) {
   .all-posts-page{
     margin: 50px 5px;

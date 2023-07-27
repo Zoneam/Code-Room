@@ -42,21 +42,7 @@ export default function AllPostsPage({ user }) {
     setCurrentPage(page);
   }
 
-  const posts = allPosts.map((post, i) => {
-    return (
-      <div className="all-posts-page"
-        key={i}
-        style={{
-          width: "100%",
-          margin: "50px auto",
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-        <PublicPost post={post} key={i} handleLike={handleLike} user={user} />
-      </div>
-    );
-  });
+  const posts = allPosts.map(post => <PublicPost post={post} key={post._id} handleLike={handleLike} user={user} />);
 
   const pageLinks = [];
   for (let i = 1; i <= totalPages; i++) {
