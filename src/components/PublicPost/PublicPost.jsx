@@ -11,7 +11,6 @@ export default function Post({ post, handleLike, user }) {
   const authorName = post.author.name.length > 10 ? post.author.name.slice(0, 7) + "..." : post.author.name;
   const dateCreated = post.dateCreated.split("T")[0].split('-').reverse().join('/');
   const likeIconClass = post.likes.includes(user._id) ? "fa-xl fas fa-heart srtik" : "fa-xl fas fa-heart-broken srtik";
-console.log("POST",post)
   return (
     <>
           <div className="all-posts-page"

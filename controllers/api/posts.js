@@ -23,140 +23,225 @@ async function getAllPosts(req, res) {
   try {
     const count = await Post.countDocuments({ public: true });
     const totalPages = Math.ceil(count / pageSize);
+
+    if (page > totalPages) {
+      return res.status(400).json({ error: 'Page does not exist' });
+    }
+
     const posts = await Post.find({ public: true })
-    .populate("author")
-    .sort({ createdAt: -1 })
-    .skip((page - 1) * pageSize)
-    .limit(pageSize)
-    console.log("PAGE -----> ",posts)
-    res.json({ posts, totalPages });
+      .populate("author")
+      .sort({ createdAt: -1 })
+      .skip((page - 1) * pageSize)
+      .limit(pageSize);
+
+    return res.json({ posts, totalPages });
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server Error");
+
+    if (err.name === 'CastError' && err.kind === 'ObjectId') {
+      return res.status(400).json({ error: 'Invalid post id' });
+    }
+
+    return res.status(500).json({ error: 'Internal server error' });
   }
 }
 
+
 // Create new post
 async function createNewPost(req, res) {
-  req.body.post.author = req.user._id;
-  console.log("REQ.BODY.POST -----> ",req.body.post)
-  const post = Post.create(req.body.post)
-  console.log("POST ----->+++ ",post)
-  res.json(post);
+  try {
+    req.body.post.author = req.user._id;
+    const post = await Post.create(req.body.post);
+    res.status(201).json(post); // 201 Created
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
+  }
 }
 
 // Get all my posts
 async function getMyPosts(req, res) {
-  console.log("REQ.USER -----> ",req.user._id)
-  const posts = await Post.find({ author: req.user._id });
-  console.log("POSTS -----> ",posts)
-  res.json(posts);
+  try {
+    const posts = await Post.find({ author: req.user._id });
+    res.json(posts);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
+  }
 }
+
 
 // Add Like
 async function addLike(req, res) {
-  const post = await Post.findById(req.params.postId )
-  .populate("author")
-  console.log("POST -----> ", post)
-    if(!post.likes.includes(req.user._id)){
-      post.likes.push(req.user._id);
-    } else {
-      post.likes.splice(post.likes.indexOf(req.user._id),1)
+  try {
+    const postId = req.params.postId;
+    const userId = req.user._id;
+    
+    let post = await Post.findById(postId).populate("author");
+    
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
     }
-    await post.save();
-    console.log("POST -----> ",post)
+    // check if the user has already liked the post
+    if (!post.likes.includes(userId)) {
+      post = await Post.findByIdAndUpdate(postId, { $push: { likes: userId } }, { new: true }).populate("author");
+    } else {
+      post = await Post.findByIdAndUpdate(postId, { $pull: { likes: userId } }, { new: true }).populate("author");
+    }
     res.json(post);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
   }
+}
+
 
 // Get full post page
 async function getFullPost(req, res) {
-  const post = await Post.findById(req.params.id)
-  .populate("author")
-     post.comments = post.comments.reverse(); 
-     res.json(post);
+  try {
+    const postId = req.params.id;
+    const post = await Post.findById(postId)
+  .populate({
+    path: 'comments',
+    options: { sort: { 'date': -1 } }
+  })
+  .populate('author');
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    } 
+    res.json(post);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
+  }
 }
+
 
 // Add Comment
 async function addComment(req, res) {
-  let comment = {
-    commentText:req.body.comment,
-    author: req.user._id,
+  try {
+    const userId = req.user._id;
+    const postId = req.params.id;
+    const commentText = req.body.comment;
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const post = await Post.findById(postId).populate("author");
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    const comment = {
+      commentText,
+      author: userId,
+      username: user.name,
+    };
+
+    post.comments.push(comment);
+    await post.save();
+    post.comments = post.comments.reverse();
+    res.json(post);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
   }
-  User.findOne({ _id: req.user._id}, async function(err,foundUser) {
-      comment.username = foundUser.name
-      Post.findOne({ _id: req.params.id })
-      .populate("author")
-      .exec( async function (err, foundPost) {
-        foundPost.comments.push(comment)
-        await foundPost.save();
-        foundPost.comments = foundPost.comments.reverse();
-        res.json(foundPost);
-      })
-    })
 }
+
 
 // Delete Comment
 async function deleteComment(req, res) {
-  const post = await Post.findOne({ 'comments._id': req.params.commentId , 'comments.author': req.user._id })
-  .populate("author")
-  if (post) {
-    // Find the comment with the specified commentId and remove it from the comments array
-    const commentIndex = post.comments.findIndex(
-      (comment) => comment._id.toString() === req.params.commentId
-    );
-    if (commentIndex >= 0) {
-      post.comments.splice(commentIndex, 1);
-      await post.save();
-      post.comments = post.comments.reverse();
-      res.json(post);
-    } else {
-      // If the comment does not exist, return an error message
-      res.status(404).json({ error: 'Comment not found' });
+  try {
+    const postId = req.params.id;
+    const commentId = req.params.commentId;
+    const userId = req.user._id;
+
+    const post = await Post.findOne({ 'comments._id': commentId, 'comments.author': userId }).populate("author");
+    if (!post) {
+      return res.status(401).json({ message: 'You are not authorized to delete this comment' });
     }
-  } else {
-    // If the post does not exist or is not owned by the user, return an error message
-    res.status(401).json({ error: 'You are not authorized to delete this post' });
+    post.comments = post.comments.filter(comment => comment._id.toString() !== commentId);
+    await post.save();
+    post.comments = post.comments.reverse();
+    res.json(post);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Internal server error' });
   }
 }
+
 
 // Add Lock
 async function addLock(req, res) {
-  Post.findOne({_id: req.params.id }, async function(err,found){
-    found.public = !found.public
-    await found.save();
-    const posts = await Post.find({ author: req.user._id });
+  try {
+    const postId = req.params.id;
+    const userId = req.user._id;
+    let post = await Post.findById(postId);
+    
+    if (!post) {
+      return res.status(404).json({ message: 'Post not found' });
+    }
+
+    post.public = !post.public;
+    await post.save();
+    const posts = await Post.find({ author: userId });
+
     res.json(posts);
-  })
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Internal server error' });
+  }
 }
+
 
 // Delete Post
 async function deletePost(req, res) {
-  const post = await Post.findOne({ _id: req.params.id, author: req.user._id });
-  if (post) {
-    await Post.deleteOne({ _id: req.params.id });
-    const posts = await Post.find({ author: req.user._id });
+  try {
+    const postId = req.params.id;
+    const userId = req.user._id;
+    const post = await Post.findOneAndDelete({ _id: postId, author: userId });
+    
+    if (!post) {
+      return res.status(401).json({ message: 'You are not authorized to delete this post' });
+    }
+    const posts = await Post.find({ author: userId });
     res.json(posts);
-  } else {
-    // If the post does not exist or is not owned by the user, return an error message
-    res.status(401).json({ error: 'You are not authorized to delete this post' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Internal server error' });
   }
 }
+
 
 
 // Get all user posts
 async function getUserPosts(req, res) {
-   Post.find({$and:[{ public: true }, {author: req.params.id}]})
-  .populate("author")
-  .populate("likes")
-  .exec(function (err, posts) {
-    res.json(posts); 
-  });
+  try {
+    const userId = req.params.id;
+    const posts = await Post.find({ public: true, author: userId })
+      .populate("author")
+      .populate("likes");
+
+    res.json(posts);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Internal server error' });
+  }
 }
+
 
 // Get all user favorite posts
 async function getUserFavoritePosts(req, res) {
-  const posts = await Post.find({ 'likes': req.user._id })
-  .populate("author")
-  console.log("POSTS -----> ",posts)
-  res.json(posts); 
+  try {
+    const userId = req.user._id;
+    const posts = await Post.find({ 'likes': userId })
+      .populate("author");
+
+    res.json(posts);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Internal server error' });
+  }
 }

@@ -20,7 +20,6 @@ export function getAllPosts(page) {
 }
 
 export function addLike(postId) {
-  console.log("POSTID -----> ",postId)
   return sendRequest(`${BASE_URL}/like/${postId}`, 'PUT');
 }
 
