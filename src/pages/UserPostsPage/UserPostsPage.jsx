@@ -24,24 +24,16 @@ export default function UserPostsPage({ user }) {
   }, []);
 
   async function handleLike(postId, authorId) {
-    const userPosts = await postsAPI.addUserLike(postId, authorId);
-    console.log(userPosts)
-    setUserPosts(userPosts.reverse());
-    if (userPosts.find((post) => post._id === postId).likes.users.includes(user._id)){
-      console.log(userPosts)
+    const userPosts = await postsAPI.addLike(postId, authorId);
+    setUserPosts((prevPosts) => prevPosts.map((post) => (post._id === userPosts._id ? userPosts : post)));
+    if (userPosts.likes.includes(user._id)){
       likedSuccessfully();
     } else {
       dislikedSuccessfully();
     }
   }
 
-  const posts = userPosts.map((post, i) => {
-    return (
-      <div key={i} className="user-posts-page-wrapper">
-        <PublicPost myPost={post} key={i} handleLike={handleLike} user={user} />
-      </div>
-    );
-  });
+  const posts = userPosts.map((post, i) => <PublicPost post={post} key={i} handleLike={handleLike} user={user} />);
  
   return (
     <>

@@ -32,6 +32,7 @@
 }
 
 .copy-btn {
+  
   cursor: pointer;
   position: absolute;
   right: 0.7rem;
@@ -84,6 +85,8 @@ textarea{
 .srtik:hover {
   font-size: 36px;
 }
+
+
 
 @media screen and (max-width: 600px) {
   .public-outer-wrapper {

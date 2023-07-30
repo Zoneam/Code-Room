@@ -25,6 +25,8 @@
     color: rgb(199, 0, 0);
  }
 
+
+ 
  @media screen and (max-width: 600px) {
     .full-post-page-header {
       min-width: 300px;
@@ -34,3 +36,4 @@
     }
   
   }
+

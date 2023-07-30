@@ -1,40 +1,51 @@
 import { useState, useEffect } from "react";
 import * as postsAPI from "../../utilities/post-api";
 import PublicPost from "../../components/PublicPost/PublicPost.jsx";
-import { useParams } from "react-router-dom";
 import "./FavoritePage.css";
 import Spinner from "react-bootstrap/Spinner";
 import Button from "react-bootstrap/Button";
 import { toast } from 'react-toastify';
 
+const dislikedSuccessfully = () => toast.error("Removed from Favorites !",  {position: toast.POSITION.BOTTOM_RIGHT});
+const likedSuccessfully = () => toast.success("Added to Favorites!",  {position: toast.POSITION.BOTTOM_RIGHT});
+
 export default function FavoritePage({ user }) {
-  const params = useParams();
   const [isLoading, setLoading] = useState(true);
   const [userFavoritePosts, setUserFavoritePosts] = useState([]);
-  const dislikedSuccessfully = () => toast.error("Removed from Favorites !",  {position: toast.POSITION.BOTTOM_RIGHT});
 
-  useEffect(function () {
+  useEffect(() => {
     async function getFavoritePosts() { 
-      const userFavoritePosts = await postsAPI.getUserFavoritePosts(user._id);
-      setUserFavoritePosts(userFavoritePosts.reverse());
-      setLoading(false);
+      try {
+        const userFavPosts = await postsAPI.getUserFavoritePosts();
+        setUserFavoritePosts([...userFavPosts].reverse());
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching posts', error);
+        setLoading(false);
+      }
     }
     getFavoritePosts();
-  }, [setUserFavoritePosts]);
+  }, []);
 
-  async function handleLike(postId, authorId) {
-    const userFavoritePosts = await postsAPI.addUserFavoriteLike(postId, authorId);
-    setUserFavoritePosts(userFavoritePosts.reverse());
-    dislikedSuccessfully();
+
+  async function handleLike(postId) {
+    try {
+      const updatedPost = await postsAPI.addLike(postId);
+      setUserFavoritePosts((prevPosts) =>
+      prevPosts.filter((post) => (post._id !== updatedPost._id ))
+      );
+      if (updatedPost.likes.includes(user._id)){
+        likedSuccessfully();
+      } else {
+        dislikedSuccessfully();
+      }
+    } catch (error) {
+      console.error('Error updating post', error);
+    }
   }
 
-  const posts = userFavoritePosts.map((post, i) => {
-    return (
-      <div key={i} className="user-posts-page-wrapper">
-        <PublicPost myPost={post} key={i} handleLike={handleLike} user={user} />
-      </div>
-    );
-  });
+  const posts = userFavoritePosts.map((post) => <PublicPost post={post} key={post._id} handleLike={handleLike} user={user} />);
+
   return (
     <>
       {!isLoading ? (

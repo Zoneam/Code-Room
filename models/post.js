@@ -46,9 +46,9 @@ const postSchema = new Schema({
     default: false,
     required: true,
   },
-  author: {type: Schema.Types.ObjectId, ref: 'User',},
+  author: {type: Schema.Types.ObjectId, ref: 'User', required: true},
   comments: [commentSchema],
-  likes: { type: Schema.Types.ObjectId, ref: 'Like' },
+  likes: Array,
   category: {
     type: String,
     enum: ['Coding', 'DataScience', 'UIUX', 'None'],
