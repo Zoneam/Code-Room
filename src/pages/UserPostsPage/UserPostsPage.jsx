@@ -25,10 +25,8 @@ export default function UserPostsPage({ user }) {
 
   async function handleLike(postId, authorId) {
     const userPosts = await postsAPI.addLike(postId, authorId);
-    console.log(userPosts)
-    setUserPosts(userPosts.reverse());
-    if (userPosts.find((post) => post._id === postId).likes.users.includes(user._id)){
-      console.log(userPosts)
+    setUserPosts((prevPosts) => prevPosts.map((post) => (post._id === userPosts._id ? userPosts : post)));
+    if (userPosts.likes.includes(user._id)){
       likedSuccessfully();
     } else {
       dislikedSuccessfully();

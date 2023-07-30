@@ -4,22 +4,23 @@ const User = require("../../models/user");
 module.exports = {
   getAllPosts,
   getMyPosts,
-  createNewPost,
-  addLike,
   getFullPost,
-  addComment,
-  addLock,
-  deletePost,
   getUserPosts,
   getUserFavoritePosts,
+  
+  addLike,
+  addLock,
+  addComment,
+  createNewPost,
+  
+  deletePost,
   deleteComment,
 };
 
-// Get All Public Posts
 // Get All Public Posts (Paginated)
 async function getAllPosts(req, res) {
-  const page = parseInt(req.query.page) || 1; // default to page 1
-  const pageSize = 5; // number of posts per page
+  const page = parseInt(req.query.page) || 1;
+  const pageSize = 5; 
   try {
     const count = await Post.countDocuments({ public: true });
     const totalPages = Math.ceil(count / pageSize);
@@ -46,13 +47,12 @@ async function getAllPosts(req, res) {
   }
 }
 
-
 // Create new post
 async function createNewPost(req, res) {
   try {
     req.body.post.author = req.user._id;
     const post = await Post.create(req.body.post);
-    res.status(201).json(post); // 201 Created
+    res.status(201).json(post); 
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Internal server error" });
@@ -70,31 +70,29 @@ async function getMyPosts(req, res) {
   }
 }
 
-
-// Add Like
+// Add Like od Dislike
 async function addLike(req, res) {
   try {
     const postId = req.params.postId;
     const userId = req.user._id;
-    
-    let post = await Post.findById(postId).populate("author");
-    
+
+    let post = await Post.findById(postId).populate('author');
     if (!post) {
       return res.status(404).json({ message: "Post not found" });
     }
-    // check if the user has already liked the post
-    if (!post.likes.includes(userId)) {
-      post = await Post.findByIdAndUpdate(postId, { $push: { likes: userId } }, { new: true }).populate("author");
-    } else {
-      post = await Post.findByIdAndUpdate(postId, { $pull: { likes: userId } }, { new: true }).populate("author");
-    }
+
+    post.likes.includes(userId) 
+    ? post.likes = post.likes.filter(like => like !== userId)  // If liked unlike
+    : post.likes.push(userId);  // If not liked then like
+  
+    post = await post.save();
+
     res.json(post);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Internal server error" });
   }
 }
-
 
 // Get full post page
 async function getFullPost(req, res) {
@@ -115,7 +113,6 @@ async function getFullPost(req, res) {
     res.status(500).json({ message: "Internal server error" });
   }
 }
-
 
 // Add Comment
 async function addComment(req, res) {
@@ -150,7 +147,6 @@ async function addComment(req, res) {
   }
 }
 
-
 // Delete Comment
 async function deleteComment(req, res) {
   try {
@@ -172,8 +168,7 @@ async function deleteComment(req, res) {
   }
 }
 
-
-// Add Lock
+// Lock Unlock post
 async function addLock(req, res) {
   try {
     const postId = req.params.id;
@@ -195,7 +190,6 @@ async function addLock(req, res) {
   }
 }
 
-
 // Delete Post
 async function deletePost(req, res) {
   try {
@@ -214,8 +208,6 @@ async function deletePost(req, res) {
   }
 }
 
-
-
 // Get all user posts
 async function getUserPosts(req, res) {
   try {
@@ -223,6 +215,10 @@ async function getUserPosts(req, res) {
     const posts = await Post.find({ public: true, author: userId })
       .populate("author")
       .populate("likes");
+
+    if (!posts || posts.length === 0) {
+      return res.status(404).json({ message: 'No posts found for this user' });
+    }
 
     res.json(posts);
   } catch (err) {
@@ -236,8 +232,13 @@ async function getUserPosts(req, res) {
 async function getUserFavoritePosts(req, res) {
   try {
     const userId = req.user._id;
+
     const posts = await Post.find({ 'likes': userId })
       .populate("author");
+
+    if (!posts || posts.length === 0) {
+      return res.status(404).json({ message: 'No favorite posts found for this user' });
+    }
 
     res.json(posts);
   } catch (err) {

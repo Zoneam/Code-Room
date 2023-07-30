@@ -6,7 +6,7 @@ import Spinner from "react-bootstrap/Spinner";
 import Button from "react-bootstrap/Button";
 import "./AllPostsPage.css";
 import { toast } from 'react-toastify';
-const {log} = console;
+const { log } = console;
 
 export default function AllPostsPage({ user }) {
   const navigate = useNavigate();
@@ -51,7 +51,7 @@ export default function AllPostsPage({ user }) {
 
   const pageLinks = [];
   for (let i = 1; i <= totalPages; i++) {
-    pageLinks.push(<Button key={i} variant={i === currentPage ? "primary" : "secondary"} onClick={() => handlePageChange(i)}>{i}</Button>);
+    pageLinks.push(<Button className="m-1" key={i} variant={i === currentPage ? "primary" : "secondary"} onClick={() => handlePageChange(i)}>{i}</Button>);
   }
 
   return (
