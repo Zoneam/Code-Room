@@ -28,23 +28,19 @@ export default function FavoritePage({ user }) {
   }, []);
 
 
-  async function handleLike(postId) {
+  async function handleLikeDislike(postId) {
     try {
       const updatedPost = await postsAPI.addLike(postId);
       setUserFavoritePosts((prevPosts) =>
       prevPosts.filter((post) => (post._id !== updatedPost._id ))
       );
-      if (updatedPost.likes.includes(user._id)){
-        likedSuccessfully();
-      } else {
-        dislikedSuccessfully();
-      }
+      updatedPost.likes.includes(user._id) ? likedSuccessfully() : dislikedSuccessfully();
     } catch (error) {
       console.error('Error updating post', error);
     }
   }
 
-  const posts = userFavoritePosts.map((post) => <PublicPost post={post} key={post._id} handleLike={handleLike} user={user} />);
+  const posts = userFavoritePosts.map((post) => <PublicPost post={post} key={post._id} handleLikeDislike={handleLikeDislike} user={user} />);
 
   return (
     <>

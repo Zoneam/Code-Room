@@ -19,17 +19,22 @@ module.exports = {
 
 // Get All Public Posts (Paginated)
 async function getAllPosts(req, res) {
+  const userId = req.params.userId;
   const page = parseInt(req.query.page) || 1;
   const pageSize = 5; 
   try {
-    const count = await Post.countDocuments({ public: true });
+    let query = { public: true };
+    if (userId) {
+      query.author = userId;
+    }
+    const count = await Post.countDocuments(query);
     const totalPages = Math.ceil(count / pageSize);
 
     if (page > totalPages) {
       return res.status(400).json({ error: 'Page does not exist' });
     }
 
-    const posts = await Post.find({ public: true })
+    const posts = await Post.find(query)
       .populate("author")
       .sort({ createdAt: -1 })
       .skip((page - 1) * pageSize)
@@ -212,6 +217,7 @@ async function deletePost(req, res) {
 async function getUserPosts(req, res) {
   try {
     const userId = req.params.id;
+    console.log(userId)
     const posts = await Post.find({ public: true, author: userId })
       .populate("author")
       .populate("likes");
@@ -219,7 +225,7 @@ async function getUserPosts(req, res) {
     if (!posts || posts.length === 0) {
       return res.status(404).json({ message: 'No posts found for this user' });
     }
-
+    console.log(posts)
     res.json(posts);
   } catch (err) {
     console.error(err);

@@ -8,6 +8,7 @@ module.exports = {
   checkToken
 };
 
+// login User
 async function login(req, res) {
   try {
     const user = await User.findOne({ email: req.body.email });
@@ -20,6 +21,7 @@ async function login(req, res) {
   }
 }
 
+// Create User
 async function create(req, res) {
   try {
     // Add the user to the database

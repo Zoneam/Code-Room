@@ -15,8 +15,8 @@ export function getMyPosts() {
   return sendRequest(`${BASE_URL}/myposts`);
 }
 
-export function getAllPosts(page) {
-  return sendRequest(`${BASE_URL}/allposts?page=${page}}`);
+export function getAllPosts(page, userId='') {
+  return sendRequest(`${BASE_URL}/posts/${userId}?page=${page}}`);
 }
 
 export function addLike(postId) {
@@ -41,10 +41,6 @@ export function addLock(id) {
 
 export function deletePost(id) {
   return sendRequest(`${BASE_URL}/myposts/${id}`, 'DELETE');
-}
-
-export function getUserPosts(postId) {
-  return sendRequest(`${BASE_URL}/userposts/${postId}`);
 }
 
 export function getUserFavoritePosts() {

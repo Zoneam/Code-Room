@@ -1,53 +1,55 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, useParams} from 'react-router-dom';
 import * as postsAPI from "../../utilities/post-api";
 import PublicPost from "../../components/PublicPost/PublicPost";
 import Spinner from "react-bootstrap/Spinner";
 import Button from "react-bootstrap/Button";
 import "./AllPostsPage.css";
 import { toast } from 'react-toastify';
+import { set } from "mongoose";
 const { log } = console;
 
 export default function AllPostsPage({ user }) {
+  const params = useParams();
+  
   const navigate = useNavigate();
   const location = useLocation();
   const likedSuccessfully = () => toast.success("Added to Favorites!",  {position: toast.POSITION.BOTTOM_RIGHT});
   const dislikedSuccessfully = () => toast.error("Removed from Favorites!", {position: toast.POSITION.BOTTOM_RIGHT});
-
+  const userId = params.userId || '';
   const [allPosts, setAllPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [isLoading, setLoading] = useState(true);
 
+
   useEffect(function () {
     async function getPosts() {
-      const params = new URLSearchParams(location.search);
-      const page = parseInt(params.get('page'));
-      const response = await postsAPI.getAllPosts(page);
+      setLoading(true);
+      const pageParams = new URLSearchParams(location.search);
+      const page = parseInt(pageParams.get('page') || '1');
+      setCurrentPage(page);
+      const response = await postsAPI.getAllPosts(page, userId);
       setAllPosts(response.posts.reverse());
       setTotalPages(response.totalPages);
       setLoading(false);
     }
     getPosts();
-  }, [location]);
+  }, [location, currentPage]);
 
-  async function handleLike(postId) {
+
+  async function handleLikeDislike(postId) {
     const updatedPost = await postsAPI.addLike(postId);
-    log(updatedPost)
     setAllPosts((prevPosts) => prevPosts.map((post) => (post._id === updatedPost._id ? updatedPost : post)));
-    if (updatedPost.likes.includes(user._id)){
-      likedSuccessfully();
-    } else {
-      dislikedSuccessfully();
-    }
+    updatedPost.likes.includes(user._id) ? likedSuccessfully() : dislikedSuccessfully();
   }
 
   function handlePageChange(page) {
     setCurrentPage(page);
-    navigate(`/allposts?page=${page}`);
+    navigate(`/allposts/${userId}?page=${page}`);
   }
 
-  const posts = allPosts.map(post => <PublicPost post={post} key={post._id} handleLike={handleLike} user={user} />);
+  const posts = allPosts.map(post => <PublicPost post={post} key={post._id} handleLikeDislike={handleLikeDislike} user={user} />);
 
   const pageLinks = [];
   for (let i = 1; i <= totalPages; i++) {

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "./PublicPost.css";
 import { OverlayTrigger, Tooltip, Badge } from "react-bootstrap";
 
-export default function Post({ post, handleLike, user }) {
+export default function Post({ post, handleLikeDislike, user }) {
   const handleCopy = (e) => {
     e.preventDefault();
     navigator.clipboard.writeText(post.code);
@@ -31,7 +31,7 @@ export default function Post({ post, handleLike, user }) {
             {post.title}
           </Badge>
           <Link
-            to={`/userposts/${post.author._id}`}
+            to={`/allposts/${post.author._id}`}
             style={{
               cursor: "pointer",
               textDecoration: "none",
@@ -45,7 +45,7 @@ export default function Post({ post, handleLike, user }) {
               )}
               placement="top"
             >
-              <div
+              <div 
                 className="public-code-wrapper"
               >
                 <i
@@ -96,7 +96,7 @@ export default function Post({ post, handleLike, user }) {
                 color: "red",
                 textShadow: "rgb(92 83 80 / 56%) 2px 2px 2px",
               }}
-              onClick={() => handleLike(post._id)}
+              onClick={() => handleLikeDislike(post._id)}
             ></i>
             <span
               style={{ color: "black", fontSize: "24px", marginRight: "15px" }}
