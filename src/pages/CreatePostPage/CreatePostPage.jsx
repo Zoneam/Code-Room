@@ -9,7 +9,7 @@ import * as postAPI from "../../utilities/post-api";
 import { toast } from 'react-toastify';
 
 export default function CreatePostPage() {
-  const createdSuccessfully = () => toast.success("Your Posting Created Successfully!",  {position: toast.POSITION.BOTTOM_RIGHT});
+  const createdSuccessfully = () => toast.success("Your Posting Created Successfully!",  {position: toast.POSITION.BOTTOM_RIGHT, autoClose: 1000});
 
   const [post, setPost] = useState({
     code: "",

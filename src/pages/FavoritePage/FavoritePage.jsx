@@ -6,8 +6,8 @@ import Spinner from "react-bootstrap/Spinner";
 import Button from "react-bootstrap/Button";
 import { toast } from 'react-toastify';
 
-const dislikedSuccessfully = () => toast.error("Removed from Favorites !",  {position: toast.POSITION.BOTTOM_RIGHT});
-const likedSuccessfully = () => toast.success("Added to Favorites!",  {position: toast.POSITION.BOTTOM_RIGHT});
+const dislikedSuccessfully = () => toast.error("Removed from Favorites !",  {position: toast.POSITION.BOTTOM_RIGHT, autoClose: 1000});
+const likedSuccessfully = () => toast.success("Added to Favorites!",   {position: toast.POSITION.BOTTOM_RIGHT, autoClose: 1000});
 
 export default function FavoritePage({ user }) {
   const [isLoading, setLoading] = useState(true);

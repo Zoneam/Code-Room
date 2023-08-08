@@ -10,8 +10,8 @@ export default function LoginForm({ setUser }) {
     password: "",
   });
   const [error, setError] = useState("");
-  const loginSuccess = (user) => toast.success(`Welcome ${user}`);
-  const loginFailed = () => toast.error(`Log In Failed - Try Again`);
+  const loginSuccess = (user) => toast.success(`Welcome ${user}`,{autoClose: 1000});
+  const loginFailed = () => toast.error(`Log In Failed - Try Again`,{autoClose: 1000});
 
   const navigate = useNavigate();
   function handleChange(evt) {

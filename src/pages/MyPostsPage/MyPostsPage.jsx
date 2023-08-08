@@ -9,9 +9,9 @@ import { toast } from 'react-toastify';
 export default function MyPostsPage() {
   const [myPosts, setMyPosts] = useState([]);
   const [isLoading, setLoading] = useState(true);
-  const deletedSuccessfully = (title) => toast.success(`${title} deleted successfully!`,  {position: toast.POSITION.BOTTOM_RIGHT});
-  const lockedSuccessfully = () => toast.success("You Made this Post Private!",  {position: toast.POSITION.BOTTOM_RIGHT});
-  const unlockedSuccessfully = () => toast.success("You Made this Post Public!",  {position: toast.POSITION.BOTTOM_RIGHT});
+  const deletedSuccessfully = (title) => toast.success(`${title} deleted successfully!`,  {position: toast.POSITION.BOTTOM_RIGHT, autoClose: 1000});
+  const lockedSuccessfully = () => toast.success("You Made this Post Private!",  {position: toast.POSITION.BOTTOM_RIGHT, autoClose: 1000});
+  const unlockedSuccessfully = () => toast.success("You Made this Post Public!",  {position: toast.POSITION.BOTTOM_RIGHT, autoClose: 1000, theme: "dark"});
 
   useEffect(function () {
     async function getPosts() {

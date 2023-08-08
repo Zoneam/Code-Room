@@ -5,7 +5,6 @@ module.exports = {
   getAllPosts,
   getMyPosts,
   getFullPost,
-  getUserPosts,
   getUserFavoritePosts,
   
   addLike,
@@ -29,14 +28,14 @@ async function getAllPosts(req, res) {
     }
     const count = await Post.countDocuments(query);
     const totalPages = Math.ceil(count / pageSize);
-
+    console.log(count, totalPages)
     if (page > totalPages) {
       return res.status(400).json({ error: 'Page does not exist' });
     }
 
     const posts = await Post.find(query)
       .populate("author")
-      .sort({ createdAt: -1 })
+      .sort({ dateCreated: -1 })
       .skip((page - 1) * pageSize)
       .limit(pageSize);
 
@@ -60,7 +59,7 @@ async function createNewPost(req, res) {
     res.status(201).json(post); 
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ error: "Internal server error" });
   }
 }
 
@@ -71,7 +70,7 @@ async function getMyPosts(req, res) {
     res.json(posts);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ error: "Internal server error" });
   }
 }
 
@@ -83,7 +82,7 @@ async function addLike(req, res) {
 
     let post = await Post.findById(postId).populate('author');
     if (!post) {
-      return res.status(404).json({ message: "Post not found" });
+      return res.status(404).json({ error: "Post not found" });
     }
 
     post.likes.includes(userId) 
@@ -95,7 +94,7 @@ async function addLike(req, res) {
     res.json(post);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ error: "Internal server error" });
   }
 }
 
@@ -110,12 +109,12 @@ async function getFullPost(req, res) {
   })
   .populate('author');
     if (!post) {
-      return res.status(404).json({ message: "Post not found" });
+      return res.status(404).json({ error: "Post not found" });
     } 
     res.json(post);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ error: "Internal server error" });
   }
 }
 
@@ -128,12 +127,12 @@ async function addComment(req, res) {
 
     const user = await User.findById(userId);
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ error: "User not found" });
     }
 
     const post = await Post.findById(postId).populate("author");
     if (!post) {
-      return res.status(404).json({ message: "Post not found" });
+      return res.status(404).json({ error: "Post not found" });
     }
 
     const comment = {
@@ -148,20 +147,19 @@ async function addComment(req, res) {
     res.json(post);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ error: "Internal server error" });
   }
 }
 
 // Delete Comment
 async function deleteComment(req, res) {
   try {
-    const postId = req.params.id;
     const commentId = req.params.commentId;
     const userId = req.user._id;
 
     const post = await Post.findOne({ 'comments._id': commentId, 'comments.author': userId }).populate("author");
     if (!post) {
-      return res.status(401).json({ message: 'You are not authorized to delete this comment' });
+      return res.status(401).json({ error: 'You are not authorized to delete this comment' });
     }
     post.comments = post.comments.filter(comment => comment._id.toString() !== commentId);
     await post.save();
@@ -169,7 +167,7 @@ async function deleteComment(req, res) {
     res.json(post);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ error: 'Internal server error' });
   }
 }
 
@@ -181,7 +179,7 @@ async function addLock(req, res) {
     let post = await Post.findById(postId);
     
     if (!post) {
-      return res.status(404).json({ message: 'Post not found' });
+      return res.status(404).json({ error: 'Post not found' });
     }
 
     post.public = !post.public;
@@ -191,7 +189,7 @@ async function addLock(req, res) {
     res.json(posts);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ error: 'Internal server error' });
   }
 }
 
@@ -203,36 +201,15 @@ async function deletePost(req, res) {
     const post = await Post.findOneAndDelete({ _id: postId, author: userId });
     
     if (!post) {
-      return res.status(401).json({ message: 'You are not authorized to delete this post' });
+      return res.status(401).json({ error: 'You are not authorized to delete this post' });
     }
     const posts = await Post.find({ author: userId });
     res.json(posts);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ error: 'Internal server error' });
   }
 }
-
-// Get all user posts
-async function getUserPosts(req, res) {
-  try {
-    const userId = req.params.id;
-    console.log(userId)
-    const posts = await Post.find({ public: true, author: userId })
-      .populate("author")
-      .populate("likes");
-
-    if (!posts || posts.length === 0) {
-      return res.status(404).json({ message: 'No posts found for this user' });
-    }
-    console.log(posts)
-    res.json(posts);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-}
-
 
 // Get all user favorite posts
 async function getUserFavoritePosts(req, res) {
@@ -243,12 +220,12 @@ async function getUserFavoritePosts(req, res) {
       .populate("author");
 
     if (!posts || posts.length === 0) {
-      return res.status(404).json({ message: 'No favorite posts found for this user' });
+      return res.status(404).json({ error: 'No favorite posts found for this user' });
     }
 
     res.json(posts);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ error: 'Internal server error' });
   }
 }

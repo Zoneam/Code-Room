@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt');
 
-const SALT_ROUNDS = 6;  // 6 is a reasonable value
+const SALT_ROUNDS = 6;  
 
 const userSchema = new Schema({
   name: {type: String, required: true},
@@ -18,7 +18,14 @@ const userSchema = new Schema({
     trim: true,
     minLength: 3,
     required: true
-  }
+  },
+  avatar: {
+    type: String,
+    default: 'https://i.imgur.com/6VBx3io.png'
+  },
+  bio: {
+    type: String,
+  },
 }, {
   timestamps: true,
   // Even though it's hashed - don't serialize the password

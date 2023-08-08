@@ -22,7 +22,6 @@ export default function CreatePostPage({ user }) {
     if (inputValue !== "") {
       const post = await postsAPI.addComment(params.id, inputValue);
       setPost(post);
-      console.log(post)
       inputRef.current.value = "";
     }
   };
