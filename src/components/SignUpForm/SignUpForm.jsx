@@ -39,7 +39,7 @@ export default class SignUpForm extends Component {
       // Baby step
       this.props.setUser(user);
       this.props.navigate("/myposts");
-      toast.success(`Welcome ${user.name}`);
+      toast.success(`Welcome ${user.name}`,{autoClose: 1000});
     } catch {
       // An error occurred
       this.setState({ error: "Sign Up Failed - Try Again" });

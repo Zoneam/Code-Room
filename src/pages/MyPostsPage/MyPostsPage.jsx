@@ -9,9 +9,10 @@ import { toast } from 'react-toastify';
 export default function MyPostsPage() {
   const [myPosts, setMyPosts] = useState([]);
   const [isLoading, setLoading] = useState(true);
-  const deletedSuccessfully = (title) => toast.success(`${title} deleted successfully!`,  {position: toast.POSITION.BOTTOM_RIGHT});
-  const lockedSuccessfully = () => toast.success("You Made this Post Private!",  {position: toast.POSITION.BOTTOM_RIGHT});
-  const unlockedSuccessfully = () => toast.success("You Made this Post Public!",  {position: toast.POSITION.BOTTOM_RIGHT});
+  const deletedSuccessfully = (title) => toast.success(`${title} deleted successfully!`,  {position: toast.POSITION.BOTTOM_RIGHT, autoClose: 1000});
+  const lockedSuccessfully = () => toast.success("You Made this Post Private!",  {position: toast.POSITION.BOTTOM_RIGHT, autoClose: 1000});
+  const unlockedSuccessfully = () => toast.success("You Made this Post Public!",  {position: toast.POSITION.BOTTOM_RIGHT, autoClose: 1000, theme: "dark"});
+  const serverError = () => toast.error("Server Error!",  {position: toast.POSITION.BOTTOM_RIGHT, autoClose: 1000});
 
   useEffect(function () {
     async function getPosts() {
@@ -21,21 +22,34 @@ export default function MyPostsPage() {
     }
     getPosts();
   }, []);
+  console.log(myPosts)
 
   const handleLock = async (id) => {
-    const posts = await postsAPI.addLock(id);
-    setMyPosts(posts.reverse());
-    if (posts.find((post) => post._id === id).public === true){
-      unlockedSuccessfully();
-    } else {
-      lockedSuccessfully();
+    try {
+      const posts = await postsAPI.addLock(id);
+      setMyPosts(posts.reverse());
+      if (posts.find((post) => post._id === id).public === true){
+        unlockedSuccessfully();
+      } else {
+        lockedSuccessfully();
+      }
+    }
+    catch (error) {
+      serverError();
+      console.error('Error updating post', error);
     }
   };
 
   const handleDelete = async (id, title) => {
-    const posts = await postsAPI.deletePost(id);
-    setMyPosts(posts.reverse());
-    deletedSuccessfully(title);
+    try {
+      const deletedPost = await postsAPI.deletePost(id);
+      setMyPosts(myPosts.filter((post) => post._id !== deletedPost._id));
+      deletedSuccessfully(title);
+    }
+    catch (error) {
+      serverError();
+      console.error('Error updating post', error);
+    }
   };
 
   const posts = myPosts.map(myPost => <Post post={myPost} key={myPost._id} handleLock={handleLock} handleDelete={handleDelete}/>);

@@ -6,8 +6,9 @@ import Spinner from "react-bootstrap/Spinner";
 import Button from "react-bootstrap/Button";
 import { toast } from 'react-toastify';
 
-const dislikedSuccessfully = () => toast.error("Removed from Favorites !",  {position: toast.POSITION.BOTTOM_RIGHT});
-const likedSuccessfully = () => toast.success("Added to Favorites!",  {position: toast.POSITION.BOTTOM_RIGHT});
+const dislikedSuccessfully = () => toast.warning("Removed from Favorites !",  {position: toast.POSITION.BOTTOM_RIGHT, autoClose: 1000});
+const likedSuccessfully = () => toast.success("Added to Favorites!",   {position: toast.POSITION.BOTTOM_RIGHT, autoClose: 1000});
+const serverError = () => toast.error("Server Error!",  {position: toast.POSITION.BOTTOM_RIGHT, autoClose: 1000});
 
 export default function FavoritePage({ user }) {
   const [isLoading, setLoading] = useState(true);
@@ -21,6 +22,7 @@ export default function FavoritePage({ user }) {
         setLoading(false);
       } catch (error) {
         console.error('Error fetching posts', error);
+        serverError();
         setLoading(false);
       }
     }
@@ -36,6 +38,7 @@ export default function FavoritePage({ user }) {
       );
       updatedPost.likes.includes(user._id) ? likedSuccessfully() : dislikedSuccessfully();
     } catch (error) {
+      serverError();
       console.error('Error updating post', error);
     }
   }

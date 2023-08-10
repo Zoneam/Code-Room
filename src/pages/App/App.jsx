@@ -10,9 +10,9 @@ import MyPostsPage from '../MyPostsPage/MyPostsPage.jsx'
 import AllPostsPage from '../AllPostsPage/AllPostsPage.jsx'
 import FullPostPage from '../FullPostPage/FullPostPage.jsx'
 import { useNavigate, Navigate } from "react-router-dom";
-// import UserPostsPage from '../UserPostsPage/UserPostsPage.jsx';
 import FavoritePage from '../FavoritePage/FavoritePage.jsx';
-import { ToastContainer } from 'react-toastify';
+import Profile from '../Profile/Profile.jsx';
+import { Flip, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
@@ -32,9 +32,9 @@ function App() {
         <Route path="/allposts/:userId" element={user?<AllPostsPage user={user}/>:<LoginForm setUser={setUser}/>}/>
         <Route path="/allposts/post/:id" element={user?<FullPostPage user={user}/>:<LoginForm setUser={setUser}/>}/>
         <Route path="/create" element={user?<CreatePostPage/>:<LoginForm setUser={setUser}/>}/>
-        {/* <Route path="/userposts/:id" element={user?<UserPostsPage user={user}/>:<LoginForm setUser={setUser}/>}/> */}
+        <Route path="/myprofile" element={user?<Profile user={user} />:<LoginForm setUser={setUser}/>}/>
       </Routes>
-      <ToastContainer />
+      <ToastContainer pauseOnFocusLoss={false} theme="dark" limit={3} transition={Flip}/>
     </div>
   );
 }
