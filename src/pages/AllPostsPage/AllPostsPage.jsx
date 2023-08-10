@@ -15,7 +15,7 @@ export default function AllPostsPage({ user }) {
   const navigate = useNavigate();
   const location = useLocation();
   const likedSuccessfully = () => toast.success("Added to Favorites!",  {position: toast.POSITION.BOTTOM_RIGHT, autoClose: 1000});
-  const dislikedSuccessfully = () => toast.error("Removed from Favorites!", {position: toast.POSITION.BOTTOM_RIGHT, autoClose: 1000});
+  const dislikedSuccessfully = () => toast.warning("Removed from Favorites!", {position: toast.POSITION.BOTTOM_RIGHT, autoClose: 1000});
   const userId = params.userId || '';
   const [allPosts, setAllPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);

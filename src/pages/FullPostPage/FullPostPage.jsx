@@ -7,6 +7,9 @@ import InputGroup from "react-bootstrap/InputGroup";
 import * as postsAPI from "../../utilities/post-api";
 import Card from "react-bootstrap/Card";
 import "./FullPostPage.css";
+import { toast } from 'react-toastify';
+
+const serverError = () => toast.error("Server Error!",  {position: toast.POSITION.BOTTOM_RIGHT, autoClose: 1000});
 
 export default function CreatePostPage({ user }) {
   const [post, setPost] = useState({
@@ -34,13 +37,18 @@ export default function CreatePostPage({ user }) {
     e.preventDefault();
     const post = await postsAPI.deleteComment(id);
     setPost(post);
-    console.log(post)
   }
 
   useEffect(function () {
     async function getPost() {
-      const post = await postsAPI.getPost(params.id);
-      setPost(post);
+      try {
+        const post = await postsAPI.getPost(params.id);
+        setPost(post);
+      }
+      catch (error) {
+        serverError();
+        console.error('Error fetching posts', error);
+      }
     }
     getPost();
   }, []);

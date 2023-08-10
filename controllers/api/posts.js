@@ -203,8 +203,8 @@ async function deletePost(req, res) {
     if (!post) {
       return res.status(401).json({ error: 'You are not authorized to delete this post' });
     }
-    const posts = await Post.find({ author: userId });
-    res.json(posts);
+
+    res.json(post);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Internal server error' });
