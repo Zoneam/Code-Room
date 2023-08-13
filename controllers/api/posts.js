@@ -28,7 +28,6 @@ async function getAllPosts(req, res) {
     }
     const count = await Post.countDocuments(query);
     const totalPages = Math.ceil(count / pageSize);
-    console.log(count, totalPages)
     if (page > totalPages) {
       return res.status(400).json({ error: 'Page does not exist' });
     }

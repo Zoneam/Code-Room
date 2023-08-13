@@ -12,7 +12,7 @@ export default function Profile({user}) {
     }
     getUserInfo();
   }, []);
-console.log(userInfo)
+
   return (
     <div className="vh-100" style={{ backgroundColor: '#9de2ff' }}>
       <MDBContainer>

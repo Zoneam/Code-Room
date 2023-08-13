@@ -22,7 +22,6 @@ export default function MyPostsPage() {
     }
     getPosts();
   }, []);
-  console.log(myPosts)
 
   const handleLock = async (id) => {
     try {

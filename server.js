@@ -19,7 +19,7 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 // middleware to server from the 'build' folder
 app.use(favicon(path.join(__dirname, 'build', 'favicon.ico')));
 app.use(express.static(path.join(__dirname, 'build')));
-const HOST = isDevelopment ? '127.0.0.1' : '0.0.0.0';
+const HOST = isDevelopment ? 'localhost' : '0.0.0.0';
 
 // Middleware to verify token and assign user object of payload to req.user.
 // Be sure to mount before routes
