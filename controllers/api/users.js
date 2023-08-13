@@ -25,12 +25,10 @@ async function login(req, res) {
 
 // Create User
 async function create(req, res) {
-  console.log('USER b---- >>>> ')
   try {
     // Add the user to the database
     const user = await User.create(req.body);
     // token will be a string
-    console.log('USER been created---- >>>> ',user)
     const token = createJWT(user);
     // Yes, we can use res.json to send back just a string
     // The client code take this into consideration
@@ -59,7 +57,6 @@ function createJWT(user) {
 }
 
 async function getUserInfo(req, res) {
-  console.log('in profile',req.user._id)
   try {
     // const user = await User.findById(req.user._id);
     const posts = await Post.find({ author: req.user._id });
@@ -82,7 +79,6 @@ async function getUserInfo(req, res) {
       });
     });
 
-    console.log(totalPosts,' : ', totalComments,' : ', totalLikes)
     res.json({
       totalPosts: totalPosts,
       totalComments: totalComments,
