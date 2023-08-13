@@ -14,12 +14,12 @@ const app = express();
 app.use(logger('dev'));
 // body parser middleware - adds properties to req.body
 app.use(express.json());
-// const isDevelopment = process.env.NODE_ENV === 'development';
+const isDevelopment = process.env.NODE_ENV === 'development';
 // Configure both serve-favicon & static
 // middleware to server from the 'build' folder
 app.use(favicon(path.join(__dirname, 'build', 'favicon.ico')));
 app.use(express.static(path.join(__dirname, 'build')));
-// const HOST = isDevelopment ? '127.0.0.1' : '0.0.0.0';
+const HOST = isDevelopment ? '127.0.0.1' : '0.0.0.0';
 
 // Middleware to verify token and assign user object of payload to req.user.
 // Be sure to mount before routes
@@ -43,6 +43,6 @@ app.get('/*', function(req, res) {
 // to avoid conflicting with the react server
 const port = process.env.PORT || 3001;
 
-app.listen(port, function() {
+app.listen(port, HOST, function() {
   console.log(`Express app running on port ${port}`);
 });
